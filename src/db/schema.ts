@@ -15,6 +15,11 @@ export class FlowbelDB extends Dexie {
       expenses: 'id, cycleId, category, state, unlocksAt, createdAt',
       fixedObligations: 'id, category'
     });
+
+    this.on('populate', () => {
+      this.fixedObligations.bulkAdd(DEFAULT_FIXED_OBLIGATIONS);
+      this.cycles.add(generateInitialCycle(new Date()));
+    });
   }
 }
 
@@ -23,6 +28,7 @@ export const db = new FlowbelDB();
 // Initialize and seed baseline records if empty
 export async function initializeDatabase(): Promise<void> {
   try {
+    await db.open();
     const fixedCount = await db.fixedObligations.count();
     if (fixedCount === 0) {
       await db.fixedObligations.bulkAdd(DEFAULT_FIXED_OBLIGATIONS);

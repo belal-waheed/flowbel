@@ -144,7 +144,9 @@ export const PlaybookDirectory: React.FC<PlaybookDirectoryProps> = ({ onSelectSc
                   {t.playbooks.goldenRuleBadge}
                 </strong>
                 <p className="line-clamp-2">
-                  {lang === 'ar' ? scenario.goldenRuleAr : scenario.goldenRuleEn}
+                  {lang === 'ar'
+                    ? scenario.goldenRuleAr.replace(/^القاعدة الذهبية:\s*/, '')
+                    : scenario.goldenRuleEn.replace(/^Golden Rule:\s*/i, '')}
                 </p>
               </div>
             </div>
