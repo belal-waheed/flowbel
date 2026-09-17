@@ -74,7 +74,12 @@ export const userSettingsSchema = z.object({
   envelopeWeights: z.array(z.number()).optional(),
   coolingThreshold: z.number().nonnegative(),
   coolingDurationHours: z.number().positive(),
-  coolingEnabled: z.boolean()
+  coolingEnabled: z.boolean(),
+  isOnboarded: z.boolean().default(true),
+  hasSeenTour: z.boolean().default(true),
+  goal: z
+    .enum(['student', 'freelancer', 'professional', 'debt_clearance', 'debtFree', 'custom'])
+    .optional()
 });
 
 export const customCategorySchema = z.object({

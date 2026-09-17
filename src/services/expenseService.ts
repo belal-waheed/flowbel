@@ -20,6 +20,8 @@ import {
   getCycleById,
   updateCycle
 } from '../db/repositories/cycleRepository';
+import { db } from '../db/schema';
+import { notificationService } from './native/notificationService';
 import { computeEnvelopeLedgers } from './cycleService';
 
 /**
@@ -113,6 +115,15 @@ export async function createExpense(params: {
     await syncCycleEnvelopes(params.cycleId);
   }
 
+  if (state === 'cooling_off' && unlocksAt) {
+    await notificationService.scheduleCoolingUnlockNotification(
+      record.id,
+      'Cooling-Off Period Complete',
+      `You can now review your planned expense of ${record.amount} EGP.`,
+      unlocksAt
+    );
+  }
+
   return record;
 }
 
@@ -135,6 +146,13 @@ export async function submitExpenseReflection(
     state: 'cooling_off',
     unlocksAt
   });
+
+  await notificationService.scheduleCoolingUnlockNotification(
+    expenseId,
+    'Cooling-Off Period Complete',
+    `You can now review your planned expense of ${record.amount} EGP.`,
+    unlocksAt
+  );
 
   return {
     ...record,
@@ -233,3 +251,96 @@ async function syncCycleEnvelopes(cycleId: string): Promise<void> {
     envelopes: updatedCycle.envelopes
   });
 }
+
+/**
+ * Atomically persists multiple expenses and updates envelope allocations within a single Dexie transaction.
+ */
+export async function createBatchExpenses(
+  cycleId: string,
+  items: Array<{
+    amount: number;
+    category: string;
+    envelopeWeek: number;
+    note?: string;
+    isDiscretionary?: boolean;
+    createdAt?: string;
+  }>,
+  coolingRules?: { threshold: number; durationHours: number; enabled: boolean }
+): Promise<{ count: number; coolingCount: number }> {
+  if (!items.length) {
+    return { count: 0, coolingCount: 0 };
+  }
+
+  const threshold = coolingRules?.threshold ?? COOLING_THRESHOLD_EGP;
+  const durationHours = coolingRules?.durationHours ?? COOLING_PERIOD_HOURS;
+  const enabled = coolingRules?.enabled ?? true;
+
+  const records: ExpenseRecord[] = [];
+  const coolingRecords: ExpenseRecord[] = [];
+
+  items.forEach((item, idx) => {
+    const isDiscretionary =
+      item.isDiscretionary !== undefined
+        ? item.isDiscretionary
+        : isDiscretionaryCategory(item.category as ExpenseCategory);
+
+    const requiresCooling = enabled && isDiscretionary && item.amount > threshold;
+    const state: ExpenseState = requiresCooling ? 'cooling_off' : 'committed';
+    const unlocksAt = requiresCooling
+      ? Date.now() + durationHours * 60 * 60 * 1000
+      : undefined;
+
+    const recordId = `exp_${Date.now()}_${Math.random().toString(36).slice(2, 7)}_${idx}`;
+    const record: ExpenseRecord = {
+      id: recordId,
+      cycleId,
+      envelopeWeek: item.envelopeWeek,
+      title: item.note?.trim() || 'Expense',
+      amount: Number(item.amount.toFixed(2)),
+      category: item.category as ExpenseCategory,
+      state,
+      isDiscretionary,
+      requiresCooling,
+      coolingDurationHours: durationHours,
+      unlocksAt,
+      createdAt: item.createdAt || new Date().toISOString(),
+      committedAt: state === 'committed' ? new Date().toISOString() : undefined
+    };
+
+    records.push(record);
+    if (state === 'cooling_off') {
+      coolingRecords.push(record);
+    }
+  });
+
+  await db.transaction('rw', [db.expenses, db.cycles], async () => {
+    await db.expenses.bulkAdd(records);
+
+    const cycle = await db.cycles.get(cycleId);
+    if (cycle) {
+      const allCycleExpenses = await db.expenses.where('cycleId').equals(cycleId).toArray();
+      const updatedCycle = computeEnvelopeLedgers(cycle, allCycleExpenses);
+      await db.cycles.update(cycleId, {
+        envelopes: updatedCycle.envelopes,
+        updatedAt: new Date().toISOString()
+      });
+    }
+  });
+
+  for (const rec of coolingRecords) {
+    if (rec.unlocksAt) {
+      await notificationService.scheduleCoolingUnlockNotification(
+        rec.id,
+        'Cooling-Off Period Complete',
+        `You can now review your planned expense of ${rec.amount} EGP.`,
+        rec.unlocksAt
+      );
+    }
+  }
+
+  return {
+    count: records.length,
+    coolingCount: coolingRecords.length
+  };
+}
+

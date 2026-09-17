@@ -42,6 +42,13 @@ export async function createCycle(cycle: BudgetCycle): Promise<string> {
 }
 
 /**
+ * Persists the initial budget cycle created during onboarding.
+ */
+export async function createInitialCycle(cycle: BudgetCycle): Promise<void> {
+  await db.cycles.add(cycle);
+}
+
+/**
  * Applies partial updates to an existing cycle.
  */
 export async function updateCycle(id: string, changes: Partial<BudgetCycle>): Promise<number> {

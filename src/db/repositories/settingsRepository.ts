@@ -2,6 +2,8 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db, DEFAULT_USER_SETTINGS, DEFAULT_CATEGORIES } from '../schema';
 import type { UserSettings, CustomCategory } from '../../types/finance';
 
+export { DEFAULT_CATEGORIES, DEFAULT_USER_SETTINGS };
+
 /**
  * Fallback tombstone category to safely handle deleted or missing categories
  * without breaking historical expense ledger rendering.

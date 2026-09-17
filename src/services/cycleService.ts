@@ -52,6 +52,21 @@ export function calculateEnvelopes(
 }
 
 /**
+ * Resolves the matching envelope for a target date within a budget cycle.
+ */
+export function getEnvelopeForDate(cycle: BudgetCycle, targetDate: Date = new Date()): WeeklyEnvelope | undefined {
+  const targetTime = targetDate.getTime();
+  for (const env of cycle.envelopes) {
+    const s = new Date(env.startDate).getTime();
+    const e = new Date(env.endDate).getTime();
+    if (targetTime >= s && targetTime <= e) {
+      return env;
+    }
+  }
+  return cycle.envelopes.find((e) => e.status === 'active') ?? cycle.envelopes[0];
+}
+
+/**
  * Determines which week (1 to envelopeCount) a date falls within for a given cycle.
  */
 export function getCycleWeekForDate(cycle: BudgetCycle, targetDate: Date = new Date()): number {

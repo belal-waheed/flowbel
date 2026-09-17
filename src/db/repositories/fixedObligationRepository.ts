@@ -121,3 +121,11 @@ export async function addFixedObligations(obligations: FixedObligation[]): Promi
   return res;
 }
 
+/**
+ * Bulk adds fixed obligations and synchronizes active cycle if present.
+ */
+export async function bulkAddFixedObligations(obligations: FixedObligation[]): Promise<void> {
+  await db.fixedObligations.bulkAdd(obligations);
+  await syncActiveCycleWithObligations();
+}
+

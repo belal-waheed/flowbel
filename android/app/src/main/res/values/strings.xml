@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Flowbel</string>
+    <string name="title_activity_main">Flowbel</string>
+    <string name="package_name">com.flowbel.app</string>
+    <string name="custom_url_scheme">com.flowbel.app</string>
+</resources>

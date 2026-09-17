@@ -154,6 +154,94 @@ export interface Translations {
     defaultBadge: string;
     emptyMessage: string;
   };
+  onboarding: {
+    welcomeTitle: string;
+    welcomeSub: string;
+    stepIndicator: string;
+    nextBtn: string;
+    backBtn: string;
+    finishBtn: string;
+    skipStep: string;
+    step1Title: string;
+    step1Sub: string;
+    goalLabel: string;
+    goals: {
+      student: { title: string; desc: string };
+      freelancer: { title: string; desc: string };
+      professional: { title: string; desc: string };
+      debtFree: { title: string; desc: string };
+      custom: { title: string; desc: string };
+    };
+    currencyLabel: string;
+    step2Title: string;
+    step2Sub: string;
+    allowanceLabel: string;
+    allowancePlaceholder: string;
+    paydayLabel: string;
+    envelopeCountLabel: string;
+    envelopeCount4: string;
+    envelopeCount5: string;
+    step3Title: string;
+    step3Sub: string;
+    addCommitment: string;
+    noCommitmentsNote: string;
+    skipCommitments: string;
+    commitmentTemplates: {
+      rent: string;
+      internet: string;
+      transit: string;
+      gym: string;
+      tuition: string;
+      coffee: string;
+    };
+    totalFixedLabel: string;
+    step4Title: string;
+    step4Sub: string;
+    guardrailTitle: string;
+    guardrailDesc: string;
+    enableGuardrail: string;
+    thresholdLabel: string;
+    durationLabel: string;
+  };
+  dailyLog: {
+    headerButton: string;
+    modalTitle: string;
+    modalSub: string;
+    dateLabel: string;
+    modeBatch: string;
+    modeQuick: string;
+    quickAmountLabel: string;
+    quickCategoryLabel: string;
+    quickNoteLabel: string;
+    batchItemsTitle: string;
+    addItemBtn: string;
+    itemAmount: string;
+    itemCategory: string;
+    itemNote: string;
+    itemNotePlaceholder: string;
+    removeItem: string;
+    runningTotal: string;
+    coolingWarning: string;
+    coolingWarningSub: string;
+    saveBatchBtn: string;
+    saveSuccess: string;
+    emptyItemsError: string;
+  };
+  tour: {
+    stepOf: string;
+    nextBtn: string;
+    backBtn: string;
+    skipBtn: string;
+    finishBtn: string;
+    step1Title: string;
+    step1Desc: string;
+    step2Title: string;
+    step2Desc: string;
+    step3Title: string;
+    step3Desc: string;
+    step4Title: string;
+    step4Desc: string;
+  };
   categories: Record<string, string>;
 }
 
@@ -319,6 +407,94 @@ export const translations: Record<Language, Translations> = {
       emergency: 'Emergency & Health',
       discretionary: 'Discretionary / Special',
       other: 'Other Miscellaneous'
+    },
+    onboarding: {
+      welcomeTitle: 'Welcome to Flowbel',
+      welcomeSub: 'Set up your mindful financial workspace in 4 focused steps.',
+      stepIndicator: 'Step {current} of {total}',
+      nextBtn: 'Next',
+      backBtn: 'Back',
+      finishBtn: 'Get Started',
+      skipStep: 'Skip this step',
+      step1Title: 'Budgeting Goal & Currency',
+      step1Sub: 'Select the financial rhythm that fits your situation and set your active currency.',
+      goalLabel: 'Financial Persona & Intent',
+      goals: {
+        student: { title: 'Student', desc: 'Manage fixed allowance and eliminate impulse spending.' },
+        freelancer: { title: 'Freelancer', desc: 'Handle irregular income and maintain runway.' },
+        professional: { title: 'Professional', desc: 'Structured paycheck allocation and wealth building.' },
+        debtFree: { title: 'Debt Clearance', desc: 'Strict spending discipline focused on essentials.' },
+        custom: { title: 'Custom / Flexible', desc: 'Build your personal budget without preset rules.' }
+      },
+      currencyLabel: 'Active Currency',
+      step2Title: 'Monthly Allowance & Payday',
+      step2Sub: 'Enter your real monthly funds and cycle start anchor.',
+      allowanceLabel: 'Total Monthly Allowance / Income',
+      allowancePlaceholder: 'Enter your actual amount...',
+      paydayLabel: 'Payday Start Date',
+      envelopeCountLabel: 'Envelope Split Model',
+      envelopeCount4: '4 Weeks (Standard)',
+      envelopeCount5: '5 Weeks (Extended)',
+      step3Title: 'Fixed Commitments',
+      step3Sub: 'Reserve non-negotiable costs (housing, utilities) to isolate your true variable pool.',
+      addCommitment: 'Add Fixed Commitment',
+      noCommitmentsNote: 'Click any template below to add your actual cost, or skip if you have none.',
+      skipCommitments: 'Skip (No fixed costs)',
+      commitmentTemplates: {
+        rent: 'Apartment Rent',
+        internet: 'Home Internet',
+        transit: 'Transit Pass',
+        gym: 'Gym Membership',
+        tuition: 'Tuition / Books',
+        coffee: 'Home Coffee Supply'
+      },
+      totalFixedLabel: 'Total Fixed Commitments',
+      step4Title: 'Categories & Guardrails',
+      step4Sub: 'Activate the mindful spending delay to interrupt impulse purchases.',
+      guardrailTitle: 'Mindful Spending Guardrail (Cooling Lock)',
+      guardrailDesc: 'Discretionary purchases above this threshold trigger a mandatory reflection pause.',
+      enableGuardrail: 'Enable Mindful Spending Guardrail',
+      thresholdLabel: 'Pause Trigger Threshold',
+      durationLabel: 'Cooldown Duration (Hours)'
+    },
+    dailyLog: {
+      headerButton: 'Daily Log',
+      modalTitle: 'Unified Daily Log Sheet',
+      modalSub: 'Record all of today\'s spending in one rapid session to protect your safe daily burn.',
+      dateLabel: 'Expense Date',
+      modeBatch: 'Multi-Item Batch',
+      modeQuick: 'Quick Daily Sum',
+      quickAmountLabel: 'Total Daily Spend',
+      quickCategoryLabel: 'Primary Category',
+      quickNoteLabel: 'Short Note (Optional)',
+      batchItemsTitle: 'Today\'s Line Items',
+      addItemBtn: 'Add Another Item',
+      itemAmount: 'Amount',
+      itemCategory: 'Category',
+      itemNote: 'Description',
+      itemNotePlaceholder: 'What was this for?',
+      removeItem: 'Remove',
+      runningTotal: 'Today\'s Session Total',
+      coolingWarning: 'Threshold Triggered',
+      coolingWarningSub: 'This item will enter the cooling pause rather than immediate deduction.',
+      saveBatchBtn: 'Commit Daily Expenses',
+      saveSuccess: 'Today\'s spending committed successfully.',
+      emptyItemsError: 'Please enter a valid amount for at least one item.'
+    },
+    tour: {
+      stepOf: '{current} of {total}',
+      nextBtn: 'Next',
+      backBtn: 'Back',
+      skipBtn: 'Skip Tour',
+      finishBtn: 'Got It',
+      step1Title: 'Safe Daily Burn',
+      step1Desc: 'Flowbel dynamically calculates your daily spending allowance based on your active weekly envelope.',
+      step2Title: 'Rolling Envelopes',
+      step2Desc: 'Your budget is segregated into independent weekly envelopes so one high-spend week never ruins your month.',
+      step3Title: 'Rapid Daily Log',
+      step3Desc: 'Tap the Daily Log button in the header once a day to enter all your transactions in a single session.',
+      step4Title: 'Decision Playbooks',
+      step4Desc: 'Access practical scripts and objective checklists whenever facing financial pressures or tough decisions.'
     }
   },
   ar: {
@@ -482,6 +658,94 @@ export const translations: Record<Language, Translations> = {
       emergency: 'طوارئ ورعاية صحية',
       discretionary: 'مصروفات استثنائية',
       other: 'نفقات متنوعة أخرى'
+    },
+    onboarding: {
+      welcomeTitle: 'مرحباً بك في Flowbel',
+      welcomeSub: 'تهيئة مساحتك المالية الواعية في 4 خطوات بسيطة.',
+      stepIndicator: 'الخطوة {current} من {total}',
+      nextBtn: 'التالي',
+      backBtn: 'السابق',
+      finishBtn: 'بدء الاستخدام',
+      skipStep: 'تخطي هذه الخطوة',
+      step1Title: 'الهدف والعملة المعتمدة',
+      step1Sub: 'اختر النمط المالي الأقرب لواقعك وحدد العملة.',
+      goalLabel: 'النمط والهدف المالي',
+      goals: {
+        student: { title: 'طالب جامعي', desc: 'إدارة المصروف الدراسي والحد من الإنفاق العشوائي.' },
+        freelancer: { title: 'مستقل / عمل حر', desc: 'التعامل مع الدخل المتغير وحماية الطوارئ.' },
+        professional: { title: 'موظف / مهني', desc: 'تخصيص الراتب بانتظام وبناء وفورات مستدامة.' },
+        debtFree: { title: 'التحرر من الالتزامات', desc: 'كبح الشراء الاندفاعي والتركيز على الأساسيات.' },
+        custom: { title: 'تخصيص حر', desc: 'بناء خطة ميزانية شخصية بدون قوالب جاهزة.' }
+      },
+      currencyLabel: 'العملة الأساسية',
+      step2Title: 'المصروف الشهري وموعد الاستلام',
+      step2Sub: 'سجل السيولة المتاحة لك وتاريخ بداية دورتك المالية.',
+      allowanceLabel: 'إجمالي المخصص الشهري',
+      allowancePlaceholder: 'أدخل المبلغ الفعلي...',
+      paydayLabel: 'تاريخ بداية الشهر المالي (يوم الاستلام)',
+      envelopeCountLabel: 'تقسيم المظاريف الأسبوعية',
+      envelopeCount4: '4 أسابيع (الافتراضي)',
+      envelopeCount5: '5 أسابيع (لأشهر أطول)',
+      step3Title: 'الالتزامات والمصروفات الثابتة',
+      step3Sub: 'أضف الالتزامات المحجوزة مسبقاً (إيجار، فواتير) لخصمها من المصروف الكلي.',
+      addCommitment: 'إضافة التزام ثابت',
+      noCommitmentsNote: 'اضغط على المقترحات لإضافتها مع تحديد القيمة الفعلية، أو تجاوز إذا لم توجد تكاليف ثابتة.',
+      skipCommitments: 'تخطي (لا توجد التزامات ثابتة)',
+      commitmentTemplates: {
+        rent: 'إيجار السكن',
+        internet: 'اشتراك الإنترنت',
+        transit: 'اشتراك المواصلات',
+        gym: 'اشتراك الجيم',
+        tuition: 'أقساط دراسية',
+        coffee: 'مخصص القهوة والمنزل'
+      },
+      totalFixedLabel: 'إجمالي الالتزامات الثابتة',
+      step4Title: 'التصنيفات وحارس التأني',
+      step4Sub: 'فعل حارس التفكير الإلزامي للسيطرة على الشراء الاندفاعي.',
+      guardrailTitle: 'حارس الإنفاق المتزن (قفل الـ 24 ساعة)',
+      guardrailDesc: 'عند تسجيل أي شراء غير أساسي يتجاوز هذا المبلغ، يفرض التطبيق مهلة تأني وتفكير.',
+      enableGuardrail: 'تفعيل حارس التأني الإلزامي',
+      thresholdLabel: 'الحد المالي لتفعيل المهلة',
+      durationLabel: 'مدة التهدئة بالساعات'
+    },
+    dailyLog: {
+      headerButton: 'تسجيل اليوم',
+      modalTitle: 'سجل الإنفاق اليومي الموحد',
+      modalSub: 'سجل جميع مشتريات اليوم في جلسة واحدة سريعة لحماية معدل الحرق اليومي.',
+      dateLabel: 'تاريخ الإنفاق',
+      modeBatch: 'تسجيل متعدد البنود',
+      modeQuick: 'تسجيل إجمالي فوري',
+      quickAmountLabel: 'المبلغ الإجمالي لليوم',
+      quickCategoryLabel: 'التصنيف الأساسي',
+      quickNoteLabel: 'ملاحظة مختصرة (اختياري)',
+      batchItemsTitle: 'بنود اليوم المنفقة',
+      addItemBtn: 'إضافة بند آخر',
+      itemAmount: 'المبلغ',
+      itemCategory: 'التصنيف',
+      itemNote: 'البيان',
+      itemNotePlaceholder: 'ما الذي أنفقته؟',
+      removeItem: 'حذف',
+      runningTotal: 'إجمالي جلسة اليوم',
+      coolingWarning: 'تنبيه: يتجاوز حد التأني',
+      coolingWarningSub: 'سيتم تحويل البند إلى مهلة التفكير الإلزامية بدلاً من الخصم المباشر.',
+      saveBatchBtn: 'تثبيت جميع المصروفات',
+      saveSuccess: 'تم تسجيل مصروفات اليوم بنجاح.',
+      emptyItemsError: 'يرجى إدخال مبلغ صحيح لبند واحد على الأقل.'
+    },
+    tour: {
+      stepOf: '{current} من {total}',
+      nextBtn: 'التالي',
+      backBtn: 'السابق',
+      skipBtn: 'تخطي الجولة',
+      finishBtn: 'فهمت ذلك',
+      step1Title: 'معدل الحرق اليومي الآمن',
+      step1Desc: 'يحسب لك Flowbel يومياً المبلغ المتاح للإنفاق بأمان بناءً على ما تبقى في مظروف أسبوعك.',
+      step2Title: 'المظاريف الأسبوعية المتنقلة',
+      step2Desc: 'ميزانيتك مقسمة على 4 أو 5 أسابيع مستقلة حتى لا يستنزف أسبوع واحد باقي الشهر.',
+      step3Title: 'زر تسجيل اليوم السريع',
+      step3Desc: 'بنقرة واحدة من الشريط العلوي، سجل جميع مشتريات اليوم دفعة واحدة دون تكرار فتح النوافذ.',
+      step4Title: 'أدلة القرارات العملية',
+      step4Desc: 'استعن بنماذج التفكير الموضوعية وقوائم التحقق عند مواجهة قرارات شرائية أو ضغوط مالية.'
     }
   }
 };

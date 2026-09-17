@@ -1,7 +1,6 @@
 import Dexie, { type Table } from 'dexie';
 import type { BudgetCycle, FixedObligation, UserSettings, CustomCategory } from '../types/finance';
 import type { ExpenseRecord } from '../types/expenseFsm';
-import { DEFAULT_FIXED_OBLIGATIONS, generateInitialCycle } from '../data/defaultBudget';
 
 export const DEFAULT_USER_SETTINGS: UserSettings = {
   id: 'current',
@@ -13,6 +12,8 @@ export const DEFAULT_USER_SETTINGS: UserSettings = {
   coolingThreshold: 150,
   coolingDurationHours: 24,
   coolingEnabled: true,
+  isOnboarded: false,
+  hasSeenTour: false,
 };
 
 export const DEFAULT_CATEGORIES: CustomCategory[] = [
@@ -51,8 +52,6 @@ export class FlowbelDB extends Dexie {
     });
 
     this.on('populate', () => {
-      this.fixedObligations.bulkAdd(DEFAULT_FIXED_OBLIGATIONS);
-      this.cycles.add(generateInitialCycle(new Date()));
       this.settings.add(DEFAULT_USER_SETTINGS);
       this.categories.bulkAdd(DEFAULT_CATEGORIES);
     });
@@ -61,24 +60,24 @@ export class FlowbelDB extends Dexie {
 
 export const db = new FlowbelDB();
 
-// Initialize and seed baseline records if empty
+// Initialize and seed baseline records if empty (zero-hardcoded data model)
 export async function initializeDatabase(): Promise<void> {
   try {
     await db.open();
-    const fixedCount = await db.fixedObligations.count();
-    if (fixedCount === 0) {
-      await db.fixedObligations.bulkAdd(DEFAULT_FIXED_OBLIGATIONS);
-    }
-
-    const cycleCount = await db.cycles.count();
-    if (cycleCount === 0) {
-      const initialCycle = generateInitialCycle(new Date());
-      await db.cycles.add(initialCycle);
-    }
 
     const settingsCount = await db.settings.count();
     if (settingsCount === 0) {
       await db.settings.add(DEFAULT_USER_SETTINGS);
+    } else {
+      // Ensure existing settings have onboarding flags if upgrading from previous versions
+      const current = await db.settings.get('current');
+      if (current && current.isOnboarded === undefined) {
+        const cycleCount = await db.cycles.count();
+        await db.settings.update('current', {
+          isOnboarded: cycleCount > 0,
+          hasSeenTour: cycleCount > 0
+        });
+      }
     }
 
     const categoriesCount = await db.categories.count();

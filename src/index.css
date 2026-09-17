@@ -48,3 +48,8 @@
     background: var(--color-text-muted);
   }
 }
+
+.safe-area-pt {
+  padding-top: max(0.75rem, env(safe-area-inset-top, 0.75rem));
+}
+

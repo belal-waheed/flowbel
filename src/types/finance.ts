@@ -18,6 +18,20 @@ export interface FixedObligation {
   isPaid?: boolean;
 }
 
+export type PersonaGoal =
+  | 'student'
+  | 'freelancer'
+  | 'professional'
+  | 'debt_clearance'
+  | 'debtFree'
+  | 'custom';
+
+export interface CoolingRuleConfig {
+  coolingThreshold: number;
+  coolingDurationHours: number;
+  coolingEnabled: boolean;
+}
+
 export interface UserSettings {
   id: string; // 'current'
   currencyCode: string; // 'EGP', 'USD', 'EUR', 'SAR', 'AED', or custom
@@ -28,6 +42,9 @@ export interface UserSettings {
   coolingThreshold: number; // default 150
   coolingDurationHours: number; // default 24
   coolingEnabled: boolean; // default true
+  isOnboarded: boolean;
+  hasSeenTour: boolean;
+  goal?: PersonaGoal;
 }
 
 export interface CustomCategory {
