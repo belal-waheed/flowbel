@@ -1,18 +1,10 @@
 import { z } from 'zod';
-import { db } from '../db/schema';
+import { db, DEFAULT_USER_SETTINGS, DEFAULT_CATEGORIES } from '../db/schema';
 import { DEFAULT_FIXED_OBLIGATIONS, generateInitialCycle } from '../data/defaultBudget';
 
 export const fixedObligationSchema = z.object({
   id: z.string(),
-  category: z.enum([
-    'housing',
-    'connectivity',
-    'travel',
-    'transit',
-    'fitness',
-    'personal',
-    'academic'
-  ]),
+  category: z.string(),
   titleEn: z.string(),
   titleAr: z.string(),
   amount: z.number().nonnegative(),
@@ -21,7 +13,7 @@ export const fixedObligationSchema = z.object({
 });
 
 export const weeklyEnvelopeSchema = z.object({
-  weekNumber: z.number().min(1).max(4),
+  weekNumber: z.number().min(1).max(5),
   labelEn: z.string(),
   labelAr: z.string(),
   startDate: z.string(),
@@ -57,20 +49,10 @@ export const reflectionAnswersSchema = z.object({
 export const expenseRecordSchema = z.object({
   id: z.string(),
   cycleId: z.string(),
-  envelopeWeek: z.number().min(1).max(4),
+  envelopeWeek: z.number().min(1).max(5),
   title: z.string(),
   amount: z.number().positive(),
-  category: z.enum([
-    'groceries',
-    'transit',
-    'study',
-    'dining',
-    'tech',
-    'leisure',
-    'emergency',
-    'discretionary',
-    'other'
-  ]),
+  category: z.string(),
   state: z.enum(['draft', 'reflection_pending', 'cooling_off', 'committed', 'aborted']),
   isDiscretionary: z.boolean(),
   requiresCooling: z.boolean(),
@@ -83,13 +65,36 @@ export const expenseRecordSchema = z.object({
   abortedAt: z.string().optional()
 });
 
+export const userSettingsSchema = z.object({
+  id: z.string(),
+  currencyCode: z.string(),
+  currencySymbolAr: z.string(),
+  currencySymbolEn: z.string(),
+  envelopeCount: z.union([z.literal(4), z.literal(5)]),
+  envelopeWeights: z.array(z.number()).optional(),
+  coolingThreshold: z.number().nonnegative(),
+  coolingDurationHours: z.number().positive(),
+  coolingEnabled: z.boolean()
+});
+
+export const customCategorySchema = z.object({
+  id: z.string(),
+  nameEn: z.string(),
+  nameAr: z.string(),
+  iconName: z.string(),
+  isCustom: z.boolean().optional(),
+  isArchived: z.boolean().optional()
+});
+
 export const backupPayloadSchema = z.object({
   version: z.number(),
   appName: z.literal('Flowbel'),
   exportedAt: z.string(),
   cycles: z.array(budgetCycleSchema),
   expenses: z.array(expenseRecordSchema),
-  fixedObligations: z.array(fixedObligationSchema)
+  fixedObligations: z.array(fixedObligationSchema),
+  settings: userSettingsSchema.optional(),
+  categories: z.array(customCategorySchema).optional()
 });
 
 export type BackupPayload = z.infer<typeof backupPayloadSchema>;
@@ -98,14 +103,18 @@ export async function createBackupPayload(): Promise<BackupPayload> {
   const cycles = await db.cycles.toArray();
   const expenses = await db.expenses.toArray();
   const fixedObligations = await db.fixedObligations.toArray();
+  const settings = await db.settings.get('current');
+  const categories = await db.categories.toArray();
 
   return {
-    version: 1,
+    version: 2,
     appName: 'Flowbel',
     exportedAt: new Date().toISOString(),
     cycles,
     expenses,
-    fixedObligations
+    fixedObligations,
+    settings: settings ?? undefined,
+    categories: categories.length > 0 ? categories : undefined
   };
 }
 
@@ -143,21 +152,33 @@ export async function restoreFromBackup(jsonString: string): Promise<{
 
     const validData = result.data;
 
-    await db.transaction('rw', [db.cycles, db.expenses, db.fixedObligations], async () => {
-      await db.cycles.clear();
-      await db.expenses.clear();
-      await db.fixedObligations.clear();
+    await db.transaction(
+      'rw',
+      [db.cycles, db.expenses, db.fixedObligations, db.settings, db.categories],
+      async () => {
+        await db.cycles.clear();
+        await db.expenses.clear();
+        await db.fixedObligations.clear();
 
-      if (validData.cycles.length > 0) {
-        await db.cycles.bulkAdd(validData.cycles);
+        if (validData.cycles.length > 0) {
+          await db.cycles.bulkAdd(validData.cycles);
+        }
+        if (validData.expenses.length > 0) {
+          await db.expenses.bulkAdd(validData.expenses);
+        }
+        if (validData.fixedObligations.length > 0) {
+          await db.fixedObligations.bulkAdd(validData.fixedObligations);
+        }
+
+        if (validData.settings) {
+          await db.settings.put(validData.settings);
+        }
+        if (validData.categories && validData.categories.length > 0) {
+          await db.categories.clear();
+          await db.categories.bulkAdd(validData.categories);
+        }
       }
-      if (validData.expenses.length > 0) {
-        await db.expenses.bulkAdd(validData.expenses);
-      }
-      if (validData.fixedObligations.length > 0) {
-        await db.fixedObligations.bulkAdd(validData.fixedObligations);
-      }
-    });
+    );
 
     return {
       success: true,
@@ -177,12 +198,23 @@ export async function restoreFromBackup(jsonString: string): Promise<{
 }
 
 export async function resetDatabaseToDefaults(): Promise<void> {
-  await db.transaction('rw', [db.cycles, db.expenses, db.fixedObligations], async () => {
-    await db.cycles.clear();
-    await db.expenses.clear();
-    await db.fixedObligations.clear();
-    await db.fixedObligations.bulkAdd(DEFAULT_FIXED_OBLIGATIONS);
-    const initialCycle = generateInitialCycle(new Date());
-    await db.cycles.add(initialCycle);
-  });
+  await db.transaction(
+    'rw',
+    [db.cycles, db.expenses, db.fixedObligations, db.settings, db.categories],
+    async () => {
+      await db.cycles.clear();
+      await db.expenses.clear();
+      await db.fixedObligations.clear();
+      await db.settings.clear();
+      await db.categories.clear();
+
+      await db.fixedObligations.bulkAdd(DEFAULT_FIXED_OBLIGATIONS);
+      await db.settings.add(DEFAULT_USER_SETTINGS);
+      await db.categories.bulkAdd(DEFAULT_CATEGORIES);
+
+      const initialCycle = generateInitialCycle(new Date());
+      await db.cycles.add(initialCycle);
+    }
+  );
 }
+

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
+import { useCategories, useUserSettings } from '../../db/repositories/settingsRepository';
 import type { BudgetCycle } from '../../types/finance';
-import type { ExpenseCategory, ReflectionAnswers } from '../../types/expenseFsm';
+import type { ReflectionAnswers } from '../../types/expenseFsm';
 import { evaluateExpenseRequirements, createExpense } from '../../services/expenseService';
 import { getCycleWeekForDate } from '../../services/cycleService';
 import { ReflectionModal } from './ReflectionModal';
@@ -22,13 +23,15 @@ export const LogExpenseModal: React.FC<LogExpenseModalProps> = ({
   onClose,
   onExpenseAdded
 }) => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const categories = useCategories();
+  const settings = useUserSettings();
 
   const activeWeek = cycle ? (defaultWeek ?? getCycleWeekForDate(cycle, new Date())) : 1;
 
   const [title, setTitle] = useState('');
   const [amountStr, setAmountStr] = useState('');
-  const [category, setCategory] = useState<ExpenseCategory>('groceries');
+  const [category, setCategory] = useState<string>('groceries');
   const [envelopeWeek, setEnvelopeWeek] = useState<number>(activeWeek);
   const [showReflection, setShowReflection] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -36,18 +39,18 @@ export const LogExpenseModal: React.FC<LogExpenseModalProps> = ({
   if (!isOpen || !cycle) return null;
 
   const amount = parseFloat(amountStr) || 0;
-  const { requiresCooling } = evaluateExpenseRequirements(amount, category);
+  const { requiresCooling } = evaluateExpenseRequirements(amount, category, settings);
 
   const handleInitialSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg(null);
 
     if (!title.trim()) {
-      setErrorMsg('Please enter a description for the expense');
+      setErrorMsg(lang === 'ar' ? 'يرجى إدخال بيان المصروف' : 'Please enter a description for the expense');
       return;
     }
     if (amount <= 0) {
-      setErrorMsg('Please enter a valid positive amount in EGP');
+      setErrorMsg(lang === 'ar' ? 'يرجى إدخال مبلغ صحيح' : 'Please enter a valid positive amount');
       return;
     }
 
@@ -62,7 +65,10 @@ export const LogExpenseModal: React.FC<LogExpenseModalProps> = ({
           envelopeWeek,
           title: title.trim(),
           amount,
-          category
+          category,
+          coolingThreshold: settings.coolingThreshold,
+          coolingDurationHours: settings.coolingDurationHours,
+          coolingEnabled: settings.coolingEnabled
         });
         resetForm();
         onClose();
@@ -81,7 +87,10 @@ export const LogExpenseModal: React.FC<LogExpenseModalProps> = ({
         title: title.trim(),
         amount,
         category,
-        reflectionAnswers: answers
+        reflectionAnswers: answers,
+        coolingThreshold: settings.coolingThreshold,
+        coolingDurationHours: settings.coolingDurationHours,
+        coolingEnabled: settings.coolingEnabled
       });
       setShowReflection(false);
       resetForm();
@@ -104,18 +113,6 @@ export const LogExpenseModal: React.FC<LogExpenseModalProps> = ({
     setCategory('groceries');
     setErrorMsg(null);
   };
-
-  const categories: ExpenseCategory[] = [
-    'groceries',
-    'transit',
-    'study',
-    'dining',
-    'tech',
-    'leisure',
-    'emergency',
-    'discretionary',
-    'other'
-  ];
 
   return (
     <>
@@ -179,7 +176,7 @@ export const LogExpenseModal: React.FC<LogExpenseModalProps> = ({
                   className="w-full rounded-xl border border-surface-border-strong bg-surface-card px-3 py-2 text-sm font-bold text-text-primary placeholder:text-text-muted focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none"
                 />
                 <span className="absolute inset-y-0 right-3 flex items-center text-xs font-semibold text-text-muted pointer-events-none">
-                  {t.currency}
+                  {lang === 'ar' ? settings.currencySymbolAr : settings.currencySymbolEn}
                 </span>
               </div>
             </div>
@@ -191,12 +188,12 @@ export const LogExpenseModal: React.FC<LogExpenseModalProps> = ({
               </label>
               <select
                 value={category}
-                onChange={(e) => setCategory(e.target.value as ExpenseCategory)}
+                onChange={(e) => setCategory(e.target.value)}
                 className="w-full rounded-xl border border-surface-border-strong bg-surface-card px-3 py-2 text-xs text-text-primary focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none"
               >
                 {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {t.categories[cat] || cat}
+                  <option key={cat.id} value={cat.id}>
+                    {lang === 'ar' ? cat.nameAr : cat.nameEn}
                   </option>
                 ))}
               </select>
@@ -207,19 +204,19 @@ export const LogExpenseModal: React.FC<LogExpenseModalProps> = ({
               <label className="block text-xs font-semibold text-text-primary mb-1">
                 {t.expenses.inputWeek}
               </label>
-              <div className="grid grid-cols-4 gap-2">
-                {[1, 2, 3, 4].map((w) => (
+              <div className="flex flex-wrap gap-2">
+                {cycle.envelopes.map((env) => (
                   <button
-                    key={w}
+                    key={env.weekNumber}
                     type="button"
-                    onClick={() => setEnvelopeWeek(w)}
-                    className={`rounded-xl border py-1.5 text-xs font-semibold transition-colors ${
-                      envelopeWeek === w
+                    onClick={() => setEnvelopeWeek(env.weekNumber)}
+                    className={`flex-1 min-w-[48px] rounded-xl border py-1.5 text-xs font-semibold transition-colors ${
+                      envelopeWeek === env.weekNumber
                         ? 'border-brand bg-brand-subtle text-brand font-bold'
                         : 'border-surface-border-strong bg-surface-card text-text-secondary hover:bg-surface-sunken'
                     }`}
                   >
-                    W{w}
+                    W{env.weekNumber}
                   </button>
                 ))}
               </div>

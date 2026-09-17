@@ -6,34 +6,34 @@ export const PLAYBOOKS: PlaybookScenario[] = [
     category: 'lending',
     titleEn: 'Lending Money & Personal Boundaries',
     titleAr: 'إقراض المال والحدود الشخصية',
-    subtitleEn: 'Shield your survival budget without ruining relationships',
-    subtitleAr: 'حماية ميزانيتك المعيشية دون حرق علاقاتك الاجتماعية',
-    contextEn: 'In Egyptian social circles, peers, relatives, and flatmates frequently request emergency loans. Because you live on a tight student allowance, informal lending will directly compromise your nutrition or rent.',
-    contextAr: 'في البيئة الاجتماعية والجامعية المصرية، تكثر طلبات السلف الطارئة من الأصدقاء والأقارب. وبما أنك تعيش بمصروف شهري محدد، فإن أي إقراض غير محسوب يهدد استقرار سكنك وطعامك مباشرة.',
+    subtitleEn: 'Shield your essential budget while preserving personal respect',
+    subtitleAr: 'حماية الميزانية المعيشية والحفاظ على العلاقات والحدود الشخصية',
+    contextEn: 'In social circles, peers, colleagues, and acquaintances frequently request emergency personal loans. Living on a partitioned monthly budget means any uncalculated lending directly impacts your essential commitments.',
+    contextAr: 'في البيئة الاجتماعية، تكثر طلبات الاقتراض الطارئة من الزملاء والمعارف. وبما أنك تدير ميزانية شهرية محددة، فإن أي إقراض غير مدروس يهدد التزاماتك الأساسية مباشرة.',
     iconName: 'ShieldAlert',
-    goldenRuleEn: 'The Golden Law: Never lend an amount you cannot afford to write off completely as an unrecoverable gift.',
-    goldenRuleAr: 'القاعدة الذهبية: لا تقرض أبداً مبلغاً لا تستطيع شطبه بالكامل من حساباتك كهدية منسية دون حسرة أو ضيق.',
+    goldenRuleEn: 'Core Principle: Never lend an amount you cannot afford to write off completely as an unrecoverable gift.',
+    goldenRuleAr: 'المبدأ الأساسي: لا تقرض أبداً مبلغاً لا تستطيع شطبه بالكامل من حساباتك دون حسرة أو ضيق.',
     principles: [
       {
         id: 'len_p1',
-        ruleEn: 'Your basic survival takes precedence over any peer convenience.',
-        ruleAr: 'أولويتك المطلقة هي أمانك المعيشي قبل مجاملة أي طرف.',
-        explanationEn: 'Lending someone money when you have only 300 EGP left in your envelope is self-sabotage, not generosity.',
-        explanationAr: 'إقراض شخص وأنت لا تملك سوى 300 جنيه في مظروفك هو تدمير ذاتي وليس كرماً.'
+        ruleEn: 'Your basic financial stability takes precedence over external requests.',
+        ruleAr: 'أولويتك المطلقة هي أمانك المعيشي واستقرارك المالي.',
+        explanationEn: 'Lending money when you have barely enough for your weekly envelope is financial self-sabotage.',
+        explanationAr: 'إقراض الآخرين مع وجود عجز أو ضيق في مخصصاتك الأسبوعية هو إخلال صريح باستقرارك المالي.'
       },
       {
         id: 'len_p2',
         ruleEn: 'Vagueness invited is debt prolonged.',
-        ruleAr: 'الضبابية في المواعيد هي مقدمة ضياع الحقوق.',
-        explanationEn: 'Never accept phrases like "I will return it when things get better". A loan without an exact calendar date is an outright gift.',
-        explanationAr: 'لا تقبل أبداً عبارات مثل "أول ما تتيسر رجعهالك". القرض بدون تاريخ سداد محدد ومكتوب هو هبة ضائعة.'
+        ruleAr: 'الضبابية في المواعيد هي مقدمة تعثر الحقوق.',
+        explanationEn: 'Never accept open-ended promises. A loan without a defined calendar repayment date creates uncertainty.',
+        explanationAr: 'تجنب الوعود غير المحددة زمنياً؛ فالمعاملة المالية الواضحة تتطلب موعد سداد صريح ومحدد مسبقاً.'
       },
       {
         id: 'len_p3',
         ruleEn: 'A clear refusal is infinitely more honorable than a false promise.',
-        ruleAr: 'الرفض القاطع بأدب أشرف ألف مرة من المماطلة أو إحراج نفسك لاحقاً.',
-        explanationEn: 'People respect firm boundaries, even if momentarily disappointed.',
-        explanationAr: 'الناس تحترم من يملك حدوداً واضحة، حتى وإن شعروا بضيق لحظي.'
+        ruleAr: 'الاعتذار الموضوعي بأدب أرقى بكثير من الوعود المؤجلة أو الحرج لاحقاً.',
+        explanationEn: 'People respect transparent boundaries and objective clarity.',
+        explanationAr: 'الوضوح واللباقة في توضيح الحدود المالية يفرضان الاحترام المتبادل ويمنعان الخلافات.'
       }
     ],
     steps: [
@@ -42,9 +42,9 @@ export const PLAYBOOKS: PlaybookScenario[] = [
         titleEn: 'Assess Your Envelope Margin First',
         titleAr: 'فحص رصيد الأسبوع الجاري بدقة',
         descriptionEn: 'Open Flowbel and check your remaining envelope balance. If the requested amount exceeds 15% of your remaining variable funds, refusal is mandatory.',
-        descriptionAr: 'افتح التطبيق وتأكد من رصيد مظروفك. إذا كان المبلغ المطلوب يتجاوز 15% من متبقي مخصصك الأسبوعي، فالرفض إلزامي ولا نقاش فيه.',
-        warningEn: 'Never borrow from future weeks or dip into the 3,150 EGP fixed obligations reserve.',
-        warningAr: 'إياك وسحب أي مليم من احتياطي الالتزامات الثابتة (3,150 ج) أو من أسابيع لم تبدأ بعد.',
+        descriptionAr: 'افتح التطبيق وتأكد من رصيد مظروفك. إذا كان المبلغ المطلوب يتجاوز 15% من متبقي مخصصك الأسبوعي، فالاعتذار ضرورة مالية.',
+        warningEn: 'Never borrow from future weeks or dip into the fixed obligations reserve.',
+        warningAr: 'تجنب السحب من مخصصات الأسابيع القادمة أو استهلاك احتياطي الالتزامات الثابتة.',
         actionableCheckEn: 'I verified that my essential commitments for the next 14 days are 100% funded.',
         actionableCheckAr: 'تأكدت أن مصاريفي الأساسية للأسبوعين القادمين مؤمنة بالكامل دون عجز.'
       },
@@ -53,18 +53,18 @@ export const PLAYBOOKS: PlaybookScenario[] = [
         titleEn: 'Classify the Request Nature',
         titleAr: 'تصنيف طبيعة وظروف الطلب',
         descriptionEn: 'Distinguish between a life-threatening crisis (sudden acute medical surgery) and lifestyle mismanagement (dining out, gifts, travel, impulse shopping).',
-        descriptionAr: 'ميز بوضوح بين الكوارث الحقيقية (علاج عاجل، تذكرة سفر لظرف أسري قاهر) وبين سوء إدارة المصروف (خروجات، شراء كماليات، هدايا).',
+        descriptionAr: 'ميز بوضوح بين الظروف الطارئة الحقيقية (علاج عاجل أو ظرف أسري قاهر) وبين تغطية عجز ناجم عن إنفاق غير محسوب.',
         actionableCheckEn: 'I verified the request is for an urgent necessity, not leisure or lifestyle subsidization.',
-        actionableCheckAr: 'تأكدت أن الطلب يخص ضرورة حتمية وليس رفاهية أو تغطية عجز ناجم عن إهمال.'
+        actionableCheckAr: 'تأكدت أن الطلب يخص ضرورة حتمية وليس تغطية إنفاق اندفاعي أو كماليات.'
       },
       {
         id: 'len_s3',
         titleEn: 'Enforce Written & Timestamped Record',
         titleAr: 'توثيق الاتفاق المالي كتابياً',
-        descriptionEn: 'If you decide to lend, record it immediately in writing over WhatsApp or messaging: exact amount in EGP, date sent, and agreed repayment date.',
-        descriptionAr: 'في حال قررت المساعدة، وثق المعاملة برسالة واضحة عبر الواتساب: المبلغ بالجنيه، تاريخ التحويل، وتاريخ الاسترداد المتفق عليه.',
+        descriptionEn: 'If you decide to lend, record it immediately in writing over digital messaging: exact amount, date sent, and agreed repayment date.',
+        descriptionAr: 'في حال قررت المساعدة، وثق المعاملة برسالة واضحة عبر المراسلة الرقمية: المبلغ، وتاريخ التحويل، وموعد السداد المتفق عليه.',
         warningEn: 'Never hand cash without a clear digital trail or mutual written confirmation.',
-        warningAr: 'لا تسلم كاش باليد دون رسالة تأكيد استلام رقمية تفصل المبلغ والموعد.',
+        warningAr: 'احرص دائماً على وجود تأكيد رقمي مكتوب يوضح تفاصيل المبلغ وموعد السداد.',
         actionableCheckEn: 'Both parties have a mutual written confirmation of the exact repayment date.',
         actionableCheckAr: 'الطرفان لديهما رسالة مكتوبة واضحة تحدد تاريخ رد المبلغ بدقة.'
       }
@@ -72,21 +72,21 @@ export const PLAYBOOKS: PlaybookScenario[] = [
     dialogues: [
       {
         triggerEn: 'A friend or acquaintance asks for a loan you cannot afford',
-        triggerAr: 'صديق أو زميل يطلب سلفة وأنت لا تملك فائضاً',
-        scriptEn: 'I understand your situation, but my monthly budget is strictly partitioned for rent and bills. I do not have uncommitted cash right now.',
-        scriptAr: 'مقدّر ظرفك جداً، لكن مصروفي مقسم بدقة على التزامات السكن والفواتير، ومش متاح معايا أي سيولة حرة الشهر ده.'
+        triggerAr: 'صديق أو زميل يطلب اقتراض مال وأنت لا تملك فائضاً',
+        scriptEn: 'I understand your situation, but my monthly budget is strictly partitioned for commitments. I do not have uncommitted cash right now.',
+        scriptAr: 'مقدر ظرفك، لكن ميزانيتي مقسمة بالكامل على التزامات محددة ولا تتوفر لدي سيولة حرة حالياً.'
       },
       {
         triggerEn: 'A borrower asks to postpone repayment past the agreed date',
         triggerAr: 'المقترض يماطل أو يطلب تأجيل موعد السداد',
-        scriptEn: 'I accommodated you on the agreed date because I have upcoming utility and grocery commitments. I need the sum by this Thursday as promised.',
-        scriptAr: 'أنا التزمت معاك على الموعد المتفق عليه لأن عندي التزامات وسداد مصاريف محددة هذا الأسبوع، ومحتاج المبلغ يوم الخميس زي ما اتفقنا.'
+        scriptEn: 'I accommodated you on the agreed date because I have upcoming utility and essential commitments. I need the sum by this Thursday as agreed.',
+        scriptAr: 'أنا التزمت معك بناءً على الموعد المتفق عليه لأن لدي التزامات مجدولة في هذا الموعد، وأحتاج المبلغ في الموعد المحدد.'
       },
       {
         triggerEn: 'Someone pressures you claiming you must have savings',
         triggerAr: 'شخص يضغط عليك بافتراض أن لديك مدخرات كافية',
         scriptEn: 'My financial allocation rules are fixed and non-negotiable. I cannot disrupt them.',
-        scriptAr: 'نظامي المالي وقواعد إدارة مصروفي صارمة ولا أستطيع الإخلال بها تحت أي ظرف.'
+        scriptAr: 'نظامي المالي وقواعد إدارة ميزانيتي ثابتة ولا أستطيع الإخلال بها.'
       }
     ]
   },
@@ -100,8 +100,8 @@ export const PLAYBOOKS: PlaybookScenario[] = [
     contextEn: 'Used technology markets in Egypt (Souq El-Bustan, Mall El-Bostan, Dubizzle, Facebook Marketplace) are filled with re-sold refurbished units, baked motherboards, worn batteries, and counterfeit power supplies.',
     contextAr: 'أسواق المستعمل في مصر (سوق البستان، مولات وسط البلد، دوبيزل ومجموعات فيسبوك) مليئة بالأجهزة المسخنة (reballed chips)، والبطاريات المتهالكة والشواحن المقلدة التي تحرق البوردة.',
     iconName: 'Laptop',
-    goldenRuleEn: 'The Golden Law: Never hand over money without a complete 30-minute stress test running directly on a live bootable USB or diagnostics suite.',
-    goldenRuleAr: 'القاعدة الذهبية: لا تسلم جنيهاً واحداً للبائع قبل تشغيل اختبارات الضغط والحرارة لمدة 30 دقيقة متواصلة وفحص كفاءة البطارية والقرص.',
+    goldenRuleEn: 'Core Principle: Never hand over payment without a complete 30-minute stress test running directly on a live diagnostics suite.',
+    goldenRuleAr: 'المبدأ الأساسي: لا تسلم المبلغ للبائع قبل تشغيل اختبارات الضغط والحرارة لمدة 30 دقيقة متواصلة وفحص كفاءة البطارية والقرص.',
     principles: [
       {
         id: 'tch_p1',
@@ -186,14 +186,14 @@ export const PLAYBOOKS: PlaybookScenario[] = [
     id: 'playbook_housing',
     category: 'housing',
     titleEn: 'Tenancy & Shared Student Housing',
-    titleAr: 'السكن والتعامل مع السماسرة والشركاء',
+    titleAr: 'إدارة السكن وعقود الإيجار والتزامات الشركاء',
     subtitleEn: 'Securing lease rights, safety deposits, and fair bill sharing',
     subtitleAr: 'حماية التأمين وعقد الإيجار وتنظيم السكن المشترك والفواتير',
-    contextEn: 'Independent students renting apartments in Cairo/Giza face shady brokers (سماسرة), landlords withholding security deposits (التأمين), and flatmates who default on utility bills.',
-    contextAr: 'الطلاب المغتربون يتعرضون لابتزاز السماسرة، واحتجاز ملاك العقارات لمبلغ التأمين، وتهرب بعض الشركاء من سداد فواتير الكهرباء والغاز في موعدها.',
+    contextEn: 'Renting apartments requires diligence with lease agreements, securing the deposit, and clear protocols with flatmates on utility contributions.',
+    contextAr: 'استئجار شقق السكن يتطلب تدقيقاً في بنود التعاقد، وحماية مبلغ التأمين، والاتفاق الواضح مع الشركاء على مواعيد وفواتير الاستهلاك.',
     iconName: 'Key',
-    goldenRuleEn: 'The Golden Law: Document every square centimeter with timestamped 4K video on day one before unpacking a single bag.',
-    goldenRuleAr: 'القاعدة الذهبية: وثق كل ركن ومفصل وشباك في الشقة بفيديو مسجل ومؤرخ قبل تفريغ حقيبة واحدة في يوم الاستلام الأول.',
+    goldenRuleEn: 'Core Principle: Document every square centimeter with timestamped video on day one before unpacking a single bag.',
+    goldenRuleAr: 'المبدأ الأساسي: وثق كل ركن وتجهيزات الشقة بتسجيل مرئي مؤرخ قبل تفريغ أمتعتك في يوم الاستلام الأول.',
     principles: [
       {
         id: 'hsg_p1',
@@ -266,15 +266,15 @@ export const PLAYBOOKS: PlaybookScenario[] = [
   {
     id: 'playbook_negotiation',
     category: 'negotiation',
-    titleEn: 'Calm Negotiation with Vendors & Tradesmen',
-    titleAr: 'التفاوض الهادئ مع التجار والحرفيين',
-    subtitleEn: 'The 3-quote rule, body language control, and the walk-away power',
-    subtitleAr: 'قاعدة عروض الأسعار الثلاثية ولغة الجسد وقوة الانسحاب الهادئ',
-    contextEn: 'In local Egyptian commercial hubs (Attaba, Mosky, Bab El-Louq, craftsmen workshops), quoted prices are anchored high assuming customers will either bargain or overpay due to embarrassment.',
-    contextAr: 'في الأسواق المصرية التقليدية وورش الحرفيين، توضع الأسعار الأولية مرتفعة جداً بافتراض أن الزبون إما سيفاصل أو سيخجل ويدفع ضعف السعر الحقيقي.',
+    titleEn: 'Calm Negotiation & Commercial Value',
+    titleAr: 'التفاوض الموضوعي والتسعير العادل',
+    subtitleEn: 'The 3-quote rule, composed communication, and the walk-away benchmark',
+    subtitleAr: 'مقارنة عروض الأسعار والتواصل الموضوعي وقوة الانسحاب الهادئ',
+    contextEn: 'In commercial markets and service workshops, initial quoted prices are often set high assuming customers will either bargain or overpay without price discovery.',
+    contextAr: 'في الأسواق التجارية ومراكز الصيانة، توضع الأسعار الأولية مرتفعة بافتراض أن المشتري إما سيتفاوض أو سيقبل السعر دون تدقيق.',
     iconName: 'Banknote',
-    goldenRuleEn: 'The Golden Law: Never buy from the first vendor who quotes you. Always gather 3 independent quotes before committing a single pound.',
-    goldenRuleAr: 'القاعدة الذهبية: لا تشترِ أبداً من المحل الأول الذي يسعرك. اجمع 3 عروض أسعار مستقلة دائماً قبل إنفاق جنيه واحد.',
+    goldenRuleEn: 'Core Principle: Never buy from the first vendor who quotes you. Always gather 3 independent quotes before committing capital.',
+    goldenRuleAr: 'المبدأ الأساسي: لا تشترِ أبداً من العرض الأول. اجمع 3 عروض أسعار مستقلة دائماً قبل اتخاذ القرار.',
     principles: [
       {
         id: 'neg_p1',
@@ -288,7 +288,7 @@ export const PLAYBOOKS: PlaybookScenario[] = [
         ruleEn: 'Never reveal your budget or your urgency.',
         ruleAr: 'لا تفصح أبداً عن سقف ميزانيتك أو مدى استعجالك للسلعة.',
         explanationEn: 'If a vendor knows you need the item within the hour, you lose 100% of your negotiating leverage.',
-        explanationAr: 'إذا علم التاجر أنك بحاجة ماسة للقطعة خلال ساعات، فقدت كل أوراق الضغط وأصبحت مضطراً لقبول شروطه.'
+        explanationAr: 'إذا علم البائع أنك بحاجة ماسة للقطعة خلال ساعات، فقدت أوراق الضغط وأصبحت مضطراً لقبول شروطه.'
       },
       {
         id: 'neg_p3',
@@ -302,27 +302,27 @@ export const PLAYBOOKS: PlaybookScenario[] = [
       {
         id: 'neg_s1',
         titleEn: 'Market Price Reconnaissance (The 3-Shop Rule)',
-        titleAr: 'استطلاع السوق (قاعدة المحلات الثلاثة)',
+        titleAr: 'استطلاع السوق (قاعدة المقارنة الثلاثية)',
         descriptionEn: 'Walk into 3 separate stores in the same commercial district. Ask for the exact technical model and price without showing buying intent. Take mental notes.',
-        descriptionAr: 'ادخل 3 محلات مختلفة في نفس المنطقة. اسأل عن نفس الموديل والمواصفات بدقة وسجل السعر في ذهنك دون إظهار رغبة في الشراء الفوري.',
+        descriptionAr: 'قم بزيارة 3 متاجر مختلفة في نفس المنطقة. اسأل عن نفس الموديل والمواصفات بدقة وقارن الأسعار دون إظهار رغبة في الشراء الفوري.',
         actionableCheckEn: 'Obtained at least 3 verified market price quotes for identical specifications.',
         actionableCheckAr: 'جمعت 3 عروض أسعار لنفس السلعة والمواصفات بدقة.'
       },
       {
         id: 'neg_s2',
         titleEn: 'Cash Leverage Anchoring',
-        titleAr: 'استخدام قوة الدفع الكاش الفوري للتخفيض',
+        titleAr: 'استخدام قوة الدفع النقدي الفوري للتفاوض',
         descriptionEn: 'Once the lowest reference price is known, propose a fair target 15-20% below, stressing immediate cash payment with no hassle.',
-        descriptionAr: 'بعد معرفة أدنى سعر، اعرض سعراً أقل بـ 15-20% مع التأكيد على الدفع الفوري كاش وجاهزية إتمام الصفقة حالاً.',
+        descriptionAr: 'بعد معرفة أدنى سعر مرجعي، اعرض سعراً عادلاً أقل بنسبة مناسبة مع التأكيد على جاهزية الدفع الفوري دون تأخير.',
         actionableCheckEn: 'Proposed an objective, fair counter-offer based on real market baseline.',
         actionableCheckAr: 'قدمت عرضاً عادلاً مبنياً على المقارنة السعرية الواقعية.'
       },
       {
         id: 'neg_s3',
         titleEn: 'The Physical Walk-Away Test',
-        titleAr: 'اختبار الانسحاب التدريجي الهادئ',
-        descriptionEn: 'If the vendor refuses your fair offer, politely smile, say "Thank you, I will take a look around", and walk slowly toward the exit. In 60% of cases, they will call you back.',
-        descriptionAr: 'إذا رفض التاجر عرضك العادل، ابتسم بهدوء وقل: "شكراً لحضرتك، هلف لفة وأرجعلك"، وتحرك ببطء نحو الباب. في أغلب الحالات سيناديك لتسوية السعر.',
+        titleAr: 'اختبار الانسحاب الهادئ',
+        descriptionEn: 'If the vendor refuses your fair offer, politely smile, say "Thank you, I will compare options and return later", and walk slowly toward the exit.',
+        descriptionAr: 'إذا رفض البائع عرضك العادل، ابتسم بهدوء وقل: "شكراً لحضرتك، سأقارن الخيارات المتاحة وأعود لاحقاً"، وتحرك بهدوء نحو المغادرة.',
         actionableCheckEn: 'Practiced graceful detachment without emotional irritation or impulse concession.',
         actionableCheckAr: 'نفذت خطوة الانسحاب بهدوء تام دون أي توتر أو تنازل اندفاعي.'
       }
@@ -331,95 +331,95 @@ export const PLAYBOOKS: PlaybookScenario[] = [
       {
         triggerEn: 'A vendor offers an inflated initial price',
         triggerAr: 'البائع يعرض سعراً أولياً مرتفعاً جداً',
-        scriptEn: 'I have researched the market rate for this piece. My budget for this item is X EGP cash right now.',
-        scriptAr: 'أنا سألت وعارف متوسط سعر القطعة في السوق، وميزانيتي ليها كاش دلوقتي X جنيه لو يناسب حضرتك.'
+        scriptEn: 'I have researched the market rate for this item. My budget for this item is X cash right now.',
+        scriptAr: 'أنا راجعت متوسط سعر القطعة في السوق، وميزانيتي المحددة لها نقداً هي X جنيه.'
       },
       {
         triggerEn: 'The seller claims this is the final price and cannot be discounted',
         triggerAr: 'البائع يؤكد أن السعر نهائي وغير قابل للتفاوض',
         scriptEn: 'I understand and respect that. I will look around a bit more. Thank you for your time.',
-        scriptAr: 'تمام يا فندم حقك، هعمل جولة سريعة وأشوف المناسب. شكراً جزيلاً لذوقك.'
+        scriptAr: 'أقدر موقف حضرتك، سأقارن الخيارات المتاحة وأعود لاحقاً. شكراً جزيلاً لوقتك.'
       }
     ]
   },
   {
     id: 'playbook_emergency',
     category: 'emergency',
-    titleEn: 'Emergency Protocol & Student Contingency Buffer',
-    titleAr: 'بروتوكول الطوارئ واحتياطي الأزمات',
-    subtitleEn: 'Off-grid cash reserves, first aid readiness, and identity security',
-    subtitleAr: 'احتياطي الكاش المخفي، الإسعافات الأولية، وتأمين الوثائق الرسمية',
-    contextEn: 'Living independently means when a phone battery dies, an ATM swallows a card, or sudden fever strikes at 3 AM, there is no one else to fix it. You must have pre-built failsafes.',
-    contextAr: 'الحياة المستقلة تعني أنه في حال نفاد شحن هاتفك، أو تعطل محفظتك الإلكترونية، أو إصابتك بحمى مفاجئة في الثالثة فجراً، لا يوجد من يتصرف بالنيابة عنك. يجب أن تكون مستعداً مسبقاً.',
+    titleEn: 'Emergency Preparedness & Contingency Buffer',
+    titleAr: 'إدارة الطوارئ والاحتياطي المالي',
+    subtitleEn: 'Contingency cash reserves, essential readiness, and document security',
+    subtitleAr: 'احتياطي السيولة للطوارئ والجاهزية وتأمين الوثائق الهامة',
+    contextEn: 'Independent living requires pre-built failsafes for unexpected moments—such as technical banking outages, urgent transit needs, or late-night medical emergencies.',
+    contextAr: 'الاستقلالية في المعيشة تتطلب استعداداً مسبقاً للمواقف الطارئة، مثل تعطل وسائل الدفع الإلكترونية، أو الحاجة لدواء عاجل في أوقات متأخرة.',
     iconName: 'Flame',
-    goldenRuleEn: 'The Golden Law: Always keep an untouchable 300 EGP physical cash note hidden inside a private notebook or book, completely separate from your wallet.',
-    goldenRuleAr: 'القاعدة الذهبية: احتفظ دائماً بمبلغ 300 جنيه كاش مخفية بين صفحات كتاب في غرفتك، منفصلة تماماً عن محفظتك وهاتفك للطوارئ القصوى.',
+    goldenRuleEn: 'Core Principle: Always keep an untouchable emergency cash reserve in physical currency, completely separate from everyday accounts.',
+    goldenRuleAr: 'المبدأ الأساسي: احتفظ دائماً بمبلغ احتياطي نقدي للطوارئ، منفصلاً تماماً عن بطاقاتك وحساباتك اليومية.',
     principles: [
       {
         id: 'emg_p1',
-        ruleEn: 'Digital money fails in real physical crises.',
-        ruleAr: 'المحافظ الإلكترونية والبطاقات قد تتعطل في أحلك الأوقات.',
-        explanationEn: 'Telecom network outages, bank server maintenance, and empty ATM cassettes happen constantly. Physical cash is king in an emergency.',
-        explanationAr: 'انقطاع شبكات المحمول أو صيانة السيرفرات البنكية تقع بلا إنذار. الكاش الورقي هو وسيلتك الوحيدة المضمونة وقت الأزمة.'
+        ruleEn: 'Digital money can experience downtime in critical moments.',
+        ruleAr: 'وسائل الدفع الرقمية قد تتعطل في أوقات غير متوقعة.',
+        explanationEn: 'Telecom network outages, bank server maintenance, and empty ATM machines occur unexpectedly. Physical contingency cash is a vital safeguard.',
+        explanationAr: 'انقطاع الشبكات أو صيانة السيرفرات البنكية تقع أحياناً بلا إنذار؛ لذا يعد الاحتياطي النقدي خط أمان أساسي في الطوارئ.'
       },
       {
         id: 'emg_p2',
-        ruleEn: 'Health emergencies cannot wait for sunrise.',
-        ruleAr: 'طوارئ المرض والآلام لا تنتظر شروق الشمس.',
-        explanationEn: 'Waking up with acute dental infection or food poisoning without basic analgesics and rehydration packets leads to panic and dangerous delays.',
-        explanationAr: 'الاستيقاظ على ألم حاد أو نزلة معوية دون مسكنات وأملاح معالجة الجفاف يسبب هلعاً ومضاعفات يمكن تجنبها بصيدلية منزلية بسيطة.'
+        ruleEn: 'Health contingencies require immediate readiness.',
+        ruleAr: 'طوارئ الرعاية الصحية تتطلب جاهزية فورية.',
+        explanationEn: 'Facing unexpected acute pain or illness without basic medication leads to avoidable distress and complications.',
+        explanationAr: 'مواجهة الآلام المفاجئة أو الوعكات الصحية دون وجود مستلزمات طبية أساسية تسبب مشقة يمكن تداركها بصيدلية إسعافات بسيطة.'
       },
       {
         id: 'emg_p3',
-        ruleEn: 'Loss of official documents destroys months of academic progress.',
-        ruleAr: 'فقدان الأوراق الرسمية والهوية يكلفك شهوراً من المشقة والتعطيل.',
-        explanationEn: 'Keep digital cloud scans of your National ID, University ID, Birth Certificate, and Military Status certificate at all times.',
-        explanationAr: 'احتفظ بنسخ سكانر واضحة لبطاقة الرقم القومي والكارنيه الجامعي وشهادة الميلاد والورق العسكري على سحابة مشفرة وهاتفك.'
+        ruleEn: 'Protecting official documents preserves vital momentum.',
+        ruleAr: 'تأمين الوثائق الرسمية يحميك من التعطيل والمشقة.',
+        explanationEn: 'Keep secure digital scans of your official identification, credentials, and essential records at all times.',
+        explanationAr: 'احرص دائماً على وجود نسخ رقمية واضحة ومؤمنة لبطاقة الهوية والوثائق الثبوتية الرسمية.'
       }
     ],
     steps: [
       {
         id: 'emg_s1',
-        titleEn: 'Physical Hidden Cash Anchor Setup',
-        titleAr: 'تجهيز رصيد الكاش المخفي (300 ج للطوارئ)',
-        descriptionEn: 'Take 300 EGP in physical currency (e.g. three 100 EGP banknotes). Place them between pages of a textbook or inside an envelope taped to a drawer underside. Never spend this on food, treats, or casual transit.',
-        descriptionAr: 'خصص 300 جنيه ورقية وضعها داخل كتاب دراسي في غرفتك. هذا المبلغ مخصص حصراً لحالات: تاكسي طارئ لمستشفى، دواء عاجل منتصف الليل، أو فقدان المحفظة بالكامل.',
-        warningEn: 'If you touch this money for casual spending, your emergency safety net is destroyed.',
-        warningAr: 'إذا أنفقت هذا المبلغ في طلبات عادية أو وجبة سريعة، فقد دمرت خط دفاعك الأخير ضد المفاجآت.',
-        actionableCheckEn: 'I have 300 EGP cash safely hidden and designated exclusively for extreme contingencies.',
-        actionableCheckAr: 'قمت بعزل 300 جنيه كاش مخفية للطوارئ القصوى فقط.'
+        titleEn: 'Physical Contingency Reserve Setup',
+        titleAr: 'تجهيز رصيد نقدي مخصص للطوارئ',
+        descriptionEn: 'Set aside a dedicated cash buffer in physical currency placed in a secure, designated spot. Reserve this exclusively for genuine emergencies.',
+        descriptionAr: 'خصص مبلغاً نقدياً للطوارئ واحفظه في مكان آمن، على أن يقتصر استخدامه حصراً على الاحتياجات الطارئة القصوى.',
+        warningEn: 'If you touch this reserve for routine expenses, your financial safety buffer is compromised.',
+        warningAr: 'استخدام هذا المبلغ في المشتريات العادية يفقدك صمام الأمان المالي ضد المفاجآت.',
+        actionableCheckEn: 'I have a physical cash reserve safely designated exclusively for urgent emergencies.',
+        actionableCheckAr: 'قمت بتخصيص مبلغ نقدي محفوظ ومحدد لحالات الطوارئ فقط.'
       },
       {
         id: 'emg_s2',
-        titleEn: 'Room First-Aid & Essential Pharmacy Kit',
-        titleAr: 'تجهيز صيدلية الغرفة الأساسية (إسعافات أولية)',
-        descriptionEn: 'Stock a small pouch containing: Paracetamol 500mg (Panadol/Paramol), Antispasmodic/digestive (Antinal / Buscopan), Oral rehydration salts (Rehydran), adhesive bandages, and antiseptic solution (Betadine). Total cost under 100 EGP.',
-        descriptionAr: 'جهز حقيبة صغيرة تضم: باراسيتامول للصداع والحمى، أنتينال للنزلة المعوية، ريهيدران للجفاف، بلاستر طبي، ومطهر بيتادين. التكلفة الإجمالية لا تتجاوز 100 جنيه وتنقذك ليلاً.',
-        actionableCheckEn: 'Basic medical pouch assembled and placed in a known, reachable spot in the room.',
-        actionableCheckAr: 'حقيبة الأدوية الأساسية جاهزة ومحفوظة في مكان ثابت ومعروف في الغرفة.'
+        titleEn: 'Essential First-Aid Kit Assembly',
+        titleAr: 'تجهيز حقيبة إسعافات أولية منزلية أساسية',
+        descriptionEn: 'Stock a small kit containing basic analgesics, gastrointestinal relief, oral rehydration salts, antiseptic, and bandages.',
+        descriptionAr: 'جهز حقيبة صغيرة تضم المسكنات الأساسية ومستلزمات علاج الجفاف والمطهرات والضمادات للاستخدام العاجل عند الحاجة.',
+        actionableCheckEn: 'Basic medical pouch assembled and placed in a known, reachable spot.',
+        actionableCheckAr: 'حقيبة الإسعافات الأساسية جاهزة ومحفوظة في مكان معروف ومتاح.'
       },
       {
         id: 'emg_s3',
-        titleEn: 'Digital Vault for Identity Documents',
+        titleEn: 'Secure Digital Vault for Identification',
         titleAr: 'تأمين نسخ الوثائق الثبوتية الرسمية سحابياً',
-        descriptionEn: 'Scan both sides of National ID (بطاقة الرقم القومي), University ID, Passport (if applicable), and Health Insurance card. Store them in a password-protected note or offline vault.',
-        descriptionAr: 'امسح ضوئياً وجهي بطاقة الرقم القومي، الكارنيه الجامعي، كارنيه التأمين الصحي، وشهادة الميلاد، واحفظها في مجلد آمن على هاتفك وسحابتك الخاصة.',
-        actionableCheckEn: 'Identity documents scanned and accessible offline from your smartphone.',
-        actionableCheckAr: 'الوثائق الرسمية ممسوحة ضوئياً ومتاحة بدون إنترنت على الهاتف.'
+        descriptionEn: 'Scan both sides of National ID, academic credentials, and medical cards. Store them in a secure, encrypted offline or cloud folder.',
+        descriptionAr: 'احفظ نسخاً ضوئية واضحة لوجهي بطاقة الهوية والوثائق الأكاديمية والطبية في مجلد مشفر ومتاح دائماً.',
+        actionableCheckEn: 'Identity documents scanned and accessible securely from your device.',
+        actionableCheckAr: 'الوثائق الرسمية ممسوحة ضوئياً ومتاحة بأمان على جهازك الشخصي.'
       }
     ],
     dialogues: [
       {
-        triggerEn: 'Facing an urgent midnight pharmacy purchase when an ATM is out of cash',
-        triggerAr: 'الحاجة لصيدلية ليلاً مع تعطل الصراف الآلي',
-        scriptEn: 'I have the emergency 300 EGP physical reserve specifically allocated for this. I will use it calmly and replenish it on next allowance day.',
-        scriptAr: 'الحمد لله، عندي رصيد الـ 300 جنيه كاش المخفي المخصص لمثل هذه اللحظات. سأستخدمه الآن بهدوء وأعوضه أول الشهر الجديد فوراً.'
+        triggerEn: 'Facing an unexpected midnight necessity when electronic payments fail',
+        triggerAr: 'مواجهة ظرف طارئ ليلاً مع تعطل وسائل الدفع الإلكترونية',
+        scriptEn: 'I have the contingency cash reserve specifically set aside for this. I will use it composedly and replenish it with the next cycle.',
+        scriptAr: 'لدي احتياطي نقدي مخصص للطوارئ لمثل هذه الظروف، وسأستخدمه الآن بهدوء وأعيد تغذيته مع بداية الدورة المالية القادمة.'
       },
       {
-        triggerEn: 'A sudden university or administrative request for lost documents',
-        triggerAr: 'طلب إداري مفاجئ لإثبات هوية أو مستند مفقود في الجامعة',
-        scriptEn: 'I have official digital high-resolution copies ready immediately on my encrypted drive.',
-        scriptAr: 'عندي نسخ رقمية رسمية عالية الجودة جاهزة على السحابة ويمكن طباعتها خلال دقائق.'
+        triggerEn: 'An unexpected administrative request for official identification documents',
+        triggerAr: 'طلب إداري مفاجئ لإثبات هوية أو مستند رسمي',
+        scriptEn: 'I have verified, high-resolution digital copies ready immediately in my secure drive.',
+        scriptAr: 'لدي نسخ رقمية معتمدة وعالية الجودة جاهزة فوراً في ملفاتي المؤمّنة.'
       }
     ]
   }

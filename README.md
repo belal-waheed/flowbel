@@ -1,6 +1,6 @@
 # Flowbel
 
-Flowbel is an open-source personal finance companion and Egyptian street-smarts playbook application built with React 19, TypeScript, and Tailwind CSS v4 for university students and young professionals to solve budget depletion and volatile everyday street transactions. It combines a 4-week envelope budgeting engine with a mandatory 24-hour cooling-off lock for discretionary spending and battle-tested Egyptian cultural protocols.
+Flowbel is an open-source personal finance companion and practical decision playbook application built with React 19, TypeScript, and Tailwind CSS v4 for university students and young professionals to solve budget depletion and volatile everyday transactions. It combines a customizable weekly envelope budgeting engine with a configurable cooling-off lock for discretionary spending and structured cultural decision protocols.
 
 The application operates on a zero-cloud, local-first paradigm with 100% on-device IndexedDB persistence, guaranteeing complete financial privacy without analytics, cookies, or remote databases.
 
@@ -12,8 +12,8 @@ The application operates on a zero-cloud, local-first paradigm with 100% on-devi
 | :--- | :--- |
 | **Application Name** | Flowbel |
 | **Canonical URL** | `https://flowbel.vercel.app` |
-| **Primary Tagline (AR)** | دليلك العملي للمال وأصول التعامل في الشارع |
-| **Secondary Tagline (EN)** | Your practical guide to money and real-world street smarts |
+| **Primary Tagline (AR)** | إدارة مالية واعية وقرارات يومية متزنة |
+| **Secondary Tagline (EN)** | Mindful budgeting and practical decision clarity |
 | **Architecture** | Local-First Progressive Web App (Offline-First) |
 | **Frontend Framework** | React 19 (Strict Mode) + TypeScript |
 | **Build Tooling** | Vite 8 + @tailwindcss/vite |
@@ -21,7 +21,7 @@ The application operates on a zero-cloud, local-first paradigm with 100% on-devi
 | **Persistence Layer** | IndexedDB via Dexie.js 4.4 + dexie-react-hooks |
 | **Validation Layer** | Zod 4 |
 | **Icon System** | Lucide React (Vector SVG only, zero emojis) |
-| **Primary Currency** | Egyptian Pound (EGP / ج.م) |
+| **Primary Currency** | Configurable (Default: Egyptian Pound EGP / ج.م, USD $, EUR €, SAR ر.س, AED د.إ) |
 | **Telemetry / Tracking** | 0% (Zero analytics, zero remote telemetry, zero third-party scripts) |
 | **License** | MIT License |
 
@@ -29,38 +29,38 @@ The application operates on a zero-cloud, local-first paradigm with 100% on-devi
 
 ## Core Architectural Modules
 
-### 1. Payday Budget Cycle & 4-Week Envelope Engine
-- **Fixed-First Quarantining:** Invariant separation of non-negotiable living costs (rent, utilities, tuition, recurring medication) on day 1 of the cycle.
-- **Equal Liquidity Distribution:** Residual variable capital is partitioned into 4 distinct weekly envelopes (`Variable Pool / 4`).
+### 1. Payday Budget Cycle & Weekly Envelope Engine
+- **Fixed-First Quarantining:** Invariant separation of non-negotiable living costs (rent, utilities, tuition, recurring commitments) on day 1 of the cycle with a dedicated commitments manager.
+- **Configurable Envelope Partitioning:** Variable liquidity is partitioned across 4 or 5 weekly envelopes with custom weight allocation or even distribution.
 - **Dynamic Safe Daily Burn:** Continuous calculation of safe daily burn based on active uncommitted liquidity divided by remaining days in the cycle:
   $$\text{Safe Daily Burn} = \frac{\text{Variable Pool} - \sum \text{Committed Expenses}}{\max(1, \text{Days Remaining})}$$
-- **Deficit Compensation:** Overspent envelopes automatically rebalance remaining weeks to prevent end-of-month starvation.
+- **Deficit Compensation:** Overspent envelopes automatically indicate overruns while preventing cross-envelope borrowing.
 
-### 2. 24-Hour Cooling-Off Impulse Guardrail (FSM)
-Flowbel intercepts every discretionary, non-essential transaction through a finite-state machine (FSM):
-1. **Interception:** User attempts to log an impulse purchase.
-2. **Stoic Reflection Audit:** User must evaluate four core questions:
-   - *Need vs Transient Want:* Is this essential survival/study equipment or transient emotional impulse?
-   - *30-Day Dormancy Test:* Will this item be in active utilization after 30 days?
+### 2. Mindful Spending Cooling-Off Guardrail (FSM)
+Flowbel intercepts discretionary, non-essential transactions through a finite-state machine (FSM) with configurable threshold amount and cooling duration:
+1. **Interception:** User attempts to log an impulse purchase exceeding the cooling threshold (default 150 EGP).
+2. **Mindful Reflection Audit:** User evaluates four core questions:
+   - *Need vs Transient Want:* Is this an essential priority or transient emotional impulse?
+   - *30-Day Utility Test:* Will this item be in active utilization after 30 days?
    - *Envelope Elasticity:* Can the current week comfortably absorb this hit?
    - *Cheaper Alternatives:* Was a second-hand, refurbished, or open-source option evaluated?
-3. **Lock Period:** Purchase enters `cooling_off` state with a 24-hour countdown timer.
-4. **Resolution:** Upon timer expiration, the user explicitly commits or aborts the transaction. Aborting records a financial victory and keeps capital intact.
+3. **Lock Period:** Purchase enters `cooling_off` state with a countdown timer (default 24 hours, configurable).
+4. **Resolution:** Upon timer expiration, the user explicitly commits or aborts the transaction. Aborting records a financial discipline victory and preserves capital.
 
-### 3. Egyptian Life & Street Playbooks
+### 3. Practical Decision Playbooks
 Structured, verified procedures and word-for-word Egyptian Arabic dialogue scripts for high-friction real-world scenarios across five implemented playbooks:
 1. **Lending Money & Boundaries (إقراض المال والحدود الشخصية):** Shielding personal liquidity without burning relationships; enforcing timestamped digital trails.
 2. **Buying Used Tech & Laptops (شراء الإلكترونيات واللابتوبات المستعملة):** 30-minute stress testing, Windows battery report audits, and SMART drive health verification.
-3. **Tenancy & Shared Housing (السكن والتعامل مع السماسرة والشركاء):** Security deposit protection, timestamped 4K walk-through videos, utility baseline audits, and flatmate bill splitting.
-4. **Calm Negotiation with Vendors (التفاوض الهادئ مع التجار والحرفيين):** The 3-shop reconnaissance rule, silence leverage, upfront cash anchoring, and the physical walk-away test.
-5. **Emergency Protocol & Buffer (بروتوكول الطوارئ واحتياطي الأزمات):** The untouchable 300 EGP physical cash anchor, room first-aid pouch, and offline digital identity scans.
+3. **Tenancy & Shared Housing (السكن والتعامل مع المشرفين والشركاء):** Security deposit protection, timestamped 4K walk-through videos, utility baseline audits, and flatmate bill splitting.
+4. **Negotiation with Vendors (التفاوض الموضوعي مع التجار ومقدمي الخدمات):** The 3-quote reconnaissance rule, silence leverage, upfront cash anchoring, and the physical walk-away test.
+5. **Emergency Protocol & Buffer (بروتوكول الطوارئ واحتياطي الأزمات):** The untouchable physical cash anchor, room first-aid pouch, and offline digital identity scans.
 
 ---
 
 ## Repository Topics
 
 Flowbel indexes across the following ecosystem topics:
-`personal-finance`, `envelope-budgeting`, `local-first`, `pwa`, `indexeddb`, `react19`, `vite`, `tailwind-v4`, `egyptian-students`, `finite-state-machine`, `offline-first`, `street-smarts`.
+`personal-finance`, `envelope-budgeting`, `local-first`, `pwa`, `indexeddb`, `react19`, `vite`, `tailwind-v4`, `mindful-budgeting`, `finite-state-machine`, `offline-first`, `decision-playbooks`.
 
 ---
 
@@ -69,11 +69,11 @@ Flowbel indexes across the following ecosystem topics:
 ### Why use local-first IndexedDB instead of a backend database like Supabase or Firebase?
 Financial data for students and young adults requires absolute privacy. By utilizing Dexie.js on top of browser IndexedDB, Flowbel ensures user balances, spending patterns, and personal reflections never leave the device. This architecture also guarantees instantaneous query response times, full offline capability during internet disruptions, and zero cloud hosting costs.
 
-### How does the 4-week envelope model handle 30-day and 31-day months?
-Flowbel anchors cycles to flexible payday intervals (e.g., from the 1st of the month to the next payday). The variable liquidity pool is divided across 4 primary budget envelopes representing weeks 1 through 4. Any surplus days at the end of a 31-day month are governed by the dynamic Safe Daily Burn Rate calculation, which dynamically stretches the remaining balance over the exact calendar days remaining.
+### How does the envelope model handle 30-day and 31-day months?
+Flowbel allows configuring either a 4-week or 5-week envelope structure to align with user compensation schedules. The variable liquidity pool is divided across envelopes according to user-selected weights or even distribution. Surplus days or month-end calendar variances are smoothly governed by the dynamic Safe Daily Burn Rate calculation, which dynamically stretches remaining liquidity over exact calendar days remaining.
 
-### How does the 24-hour cooling lock curb impulse spending?
-Psychological research indicates that impulse purchasing is driven by transient dopamine spikes. By forcing an involuntary 24-hour delay paired with 4 rational reflection prompts, Flowbel breaks the immediate emotional feedback loop. If the user decides to cancel the expense after cooling off, the application celebrates the decision as a discipline victory.
+### How does the cooling lock curb impulse spending?
+Psychological research indicates that impulse purchasing is driven by transient emotional triggers. By introducing a deliberate cooling-off delay (configurable, default 24 hours) paired with 4 rational reflection prompts, Flowbel interrupts impulsive spending loops. If the user decides to cancel the expense after cooling off, the application records the decision as a discipline victory.
 
 ### Can users back up or transfer their data between devices?
 Yes. Flowbel includes an offline JSON export and import utility in Settings. Users can download an encrypted or plaintext snapshot of their complete database state (cycles, fixed obligations, envelopes, logged expenses, and playbook completion progress) and restore it onto any browser without an internet connection.

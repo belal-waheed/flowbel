@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
+import { useUserSettings } from '../../db/repositories/settingsRepository';
 import type { BudgetCycle } from '../../types/finance';
 import { AlertTriangle, Plus } from 'lucide-react';
 import { getStatusBadge } from '../../utils/badgeHelpers';
@@ -11,6 +12,8 @@ interface WeeklyEnvelopesProps {
 
 export const WeeklyEnvelopes: React.FC<WeeklyEnvelopesProps> = ({ cycle, onOpenLogModal }) => {
   const { t, lang } = useLanguage();
+  const settings = useUserSettings();
+  const currencySymbol = lang === 'ar' ? (settings?.currencySymbolAr || t.currency) : (settings?.currencySymbolEn || t.currency);
 
   if (!cycle) return null;
 
@@ -77,7 +80,7 @@ export const WeeklyEnvelopes: React.FC<WeeklyEnvelopesProps> = ({ cycle, onOpenL
                   <span className="text-text-secondary">
                     {t.dashboard.spent}:{' '}
                     <strong className="text-text-primary">
-                      {env.spentAmount.toLocaleString()} {t.currency}
+                      {env.spentAmount.toLocaleString()} {currencySymbol}
                     </strong>
                   </span>
                   <span className="text-text-secondary font-medium">
@@ -101,7 +104,7 @@ export const WeeklyEnvelopes: React.FC<WeeklyEnvelopesProps> = ({ cycle, onOpenL
                       isOver ? 'text-guardrail-danger' : 'text-guardrail-safe'
                     }`}
                   >
-                    {env.remainingAmount.toLocaleString()} {t.currency}
+                    {env.remainingAmount.toLocaleString()} {currencySymbol}
                   </span>
                 </div>
 

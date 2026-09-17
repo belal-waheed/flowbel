@@ -1,19 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
 import {
   useFixedObligations,
   toggleObligationPaidStatus
 } from '../../db/repositories/fixedObligationRepository';
+import { useUserSettings } from '../../db/repositories/settingsRepository';
 import type { FixedObligation } from '../../types/finance';
 import {
   ShieldCheck,
   Check,
-  Clock
+  Clock,
+  SlidersHorizontal
 } from 'lucide-react';
 import { getCategoryIcon } from '../../utils/badgeHelpers';
+import { ManageCommitmentsModal } from './ManageCommitmentsModal';
 
 export const FixedObligations: React.FC = () => {
   const { t, lang } = useLanguage();
+  const settings = useUserSettings();
+  const [isManageModalOpen, setIsManageModalOpen] = useState(false);
 
   const obligations = useFixedObligations();
 
@@ -25,6 +30,8 @@ export const FixedObligations: React.FC = () => {
   const paidAmount = obligations
     .filter((o) => o.isPaid)
     .reduce((sum, o) => sum + o.amount, 0);
+
+  const currencySymbol = lang === 'ar' ? settings.currencySymbolAr : settings.currencySymbolEn;
 
   return (
     <div className="rounded-2xl border border-surface-border bg-surface-card p-5 shadow-xs">
@@ -41,14 +48,25 @@ export const FixedObligations: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-2 text-xs font-semibold">
-          <span className="text-guardrail-safe">
-            {paidAmount.toLocaleString()} {t.currency} {t.dashboard.paid}
-          </span>
-          <span className="text-text-muted">/</span>
-          <span className="text-text-primary">
-            {totalAmount.toLocaleString()} {t.currency}
-          </span>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 text-xs font-semibold">
+            <span className="text-guardrail-safe">
+              {paidAmount.toLocaleString()} {currencySymbol} {t.dashboard.paid}
+            </span>
+            <span className="text-text-muted">/</span>
+            <span className="text-text-primary">
+              {totalAmount.toLocaleString()} {currencySymbol}
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setIsManageModalOpen(true)}
+            className="flex items-center gap-1 rounded-xl border border-surface-border bg-surface-sunken px-2.5 py-1 text-xs font-semibold text-text-secondary hover:border-brand/40 hover:text-brand transition-colors"
+          >
+            <SlidersHorizontal className="h-3.5 w-3.5" />
+            <span>{t.dashboard.manageBtn}</span>
+          </button>
         </div>
       </div>
 
@@ -79,7 +97,7 @@ export const FixedObligations: React.FC = () => {
                     {lang === 'ar' ? item.titleAr : item.titleEn}
                   </p>
                   <p className="text-xs font-bold text-text-primary mt-0.5">
-                    {item.amount.toLocaleString()} {t.currency}
+                    {item.amount.toLocaleString()} {currencySymbol}
                   </p>
                 </div>
               </div>
@@ -110,6 +128,11 @@ export const FixedObligations: React.FC = () => {
           );
         })}
       </div>
+
+      <ManageCommitmentsModal
+        isOpen={isManageModalOpen}
+        onClose={() => setIsManageModalOpen(false)}
+      />
     </div>
   );
 };

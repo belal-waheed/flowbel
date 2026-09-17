@@ -294,24 +294,24 @@ const targets = [
   </div>
 
   <div class="main-body">
-    <div class="tagline-ar">دليلك العملي للمال وأصول التعامل في الشارع</div>
-    <div class="tagline-en">Your practical guide to money and real-world street smarts</div>
+    <div class="tagline-ar">إدارة مالية واعية وقرارات يومية متزنة</div>
+    <div class="tagline-en">Mindful budgeting and practical decision clarity</div>
 
     <div class="pillars-grid">
       <div class="pillar-card">
         <div class="pillar-label">Envelope Budget</div>
-        <div class="pillar-title">4-Week Payday Cycle</div>
-        <div class="pillar-ar">مظاريف الأسابيع الأربعة</div>
+        <div class="pillar-title">Weekly Envelope Model</div>
+        <div class="pillar-ar">مظاريف الميزانية الأسبوعية</div>
       </div>
       <div class="pillar-card">
         <div class="pillar-label">Impulse Guardrail</div>
-        <div class="pillar-title">24-Hour Cooling Lock</div>
-        <div class="pillar-ar">قفل التهدئة لكسر النبض</div>
+        <div class="pillar-title">Cooling-Off Lock</div>
+        <div class="pillar-ar">قفل التهدئة للإنفاق الواعي</div>
       </div>
       <div class="pillar-card">
-        <div class="pillar-label">Street Protocols</div>
-        <div class="pillar-title">Egyptian Life Playbooks</div>
-        <div class="pillar-ar">أدلة المعاملات والشارع</div>
+        <div class="pillar-label">Decision Protocols</div>
+        <div class="pillar-title">Practical Decision Playbooks</div>
+        <div class="pillar-ar">أدلة القرارات والمعاملات</div>
       </div>
       <div class="pillar-card">
         <div class="pillar-label">100% Privacy</div>

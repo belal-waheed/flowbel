@@ -34,13 +34,20 @@ export function isDiscretionaryCategory(category: ExpenseCategory): boolean {
  */
 export function evaluateExpenseRequirements(
   amount: number,
-  category: ExpenseCategory
+  category: ExpenseCategory,
+  settings?: {
+    coolingThreshold?: number;
+    coolingDurationHours?: number;
+    coolingEnabled?: boolean;
+  }
 ): {
   isDiscretionary: boolean;
   requiresCooling: boolean;
 } {
   const isDiscretionary = isDiscretionaryCategory(category);
-  const requiresCooling = isDiscretionary && amount > COOLING_THRESHOLD_EGP;
+  const enabled = settings?.coolingEnabled ?? true;
+  const threshold = settings?.coolingThreshold ?? COOLING_THRESHOLD_EGP;
+  const requiresCooling = enabled && isDiscretionary && amount > threshold;
   return { isDiscretionary, requiresCooling };
 }
 
@@ -54,12 +61,21 @@ export async function createExpense(params: {
   amount: number;
   category: ExpenseCategory;
   reflectionAnswers?: ReflectionAnswers;
+  coolingThreshold?: number;
+  coolingDurationHours?: number;
+  coolingEnabled?: boolean;
 }): Promise<ExpenseRecord> {
   const { isDiscretionary, requiresCooling } = evaluateExpenseRequirements(
     params.amount,
-    params.category
+    params.category,
+    {
+      coolingThreshold: params.coolingThreshold,
+      coolingDurationHours: params.coolingDurationHours,
+      coolingEnabled: params.coolingEnabled
+    }
   );
 
+  const durationHours = params.coolingDurationHours ?? COOLING_PERIOD_HOURS;
   let state: ExpenseState = 'committed';
   let unlocksAt: number | undefined = undefined;
 
@@ -67,7 +83,7 @@ export async function createExpense(params: {
     if (params.reflectionAnswers) {
       // Reflection already provided; enter cooling-off
       state = 'cooling_off';
-      unlocksAt = Date.now() + COOLING_PERIOD_HOURS * 60 * 60 * 1000;
+      unlocksAt = Date.now() + durationHours * 60 * 60 * 1000;
     } else {
       // Must complete reflection first
       state = 'reflection_pending';
@@ -85,7 +101,7 @@ export async function createExpense(params: {
     isDiscretionary,
     requiresCooling,
     reflectionAnswers: params.reflectionAnswers,
-    coolingDurationHours: COOLING_PERIOD_HOURS,
+    coolingDurationHours: durationHours,
     unlocksAt,
     createdAt: new Date().toISOString(),
     committedAt: state === 'committed' ? new Date().toISOString() : undefined

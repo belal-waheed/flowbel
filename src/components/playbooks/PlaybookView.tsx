@@ -4,14 +4,14 @@ import type { PlaybookScenario } from '../../types/playbook';
 import {
   ArrowLeft,
   ArrowRight,
-  ShieldAlert,
   CheckSquare,
   Square,
   AlertTriangle,
   Copy,
   Check,
   MessageSquareQuote,
-  Scale
+  Scale,
+  Compass
 } from 'lucide-react';
 
 interface PlaybookViewProps {
@@ -74,15 +74,15 @@ export const PlaybookView: React.FC<PlaybookViewProps> = ({ scenario, onBack }) 
         <p>{lang === 'ar' ? scenario.contextAr : scenario.contextEn}</p>
       </div>
 
-      {/* The Golden Law Banner */}
-      <div className="rounded-2xl border border-guardrail-cooling/30 bg-guardrail-cooling-bg p-4">
-        <div className="flex items-center gap-2 text-guardrail-cooling mb-1.5">
-          <ShieldAlert className="h-4 w-4" />
-          <span className="text-xs font-bold uppercase tracking-wider text-guardrail-cooling">
+      {/* The Core Principle Banner */}
+      <div className="rounded-2xl border border-surface-border bg-surface-sunken p-4 text-text-primary shadow-xs">
+        <div className="flex items-center gap-2 text-brand mb-1.5">
+          <Compass className="h-4 w-4" />
+          <span className="text-xs font-bold uppercase tracking-wider text-brand">
             {t.playbooks.goldenRuleBadge}
           </span>
         </div>
-        <p className="text-sm font-semibold text-guardrail-cooling">
+        <p className="text-sm font-semibold text-text-primary leading-relaxed">
           {lang === 'ar' ? scenario.goldenRuleAr : scenario.goldenRuleEn}
         </p>
       </div>

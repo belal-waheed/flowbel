@@ -7,7 +7,8 @@ export type ExpenseCategory =
   | 'leisure'
   | 'emergency'
   | 'discretionary'
-  | 'other';
+  | 'other'
+  | (string & {});
 
 export type ExpenseState =
   | 'draft'
@@ -27,7 +28,7 @@ export interface ReflectionAnswers {
 export interface ExpenseRecord {
   id: string;
   cycleId: string;
-  envelopeWeek: number; // 1 to 4
+  envelopeWeek: number; // 1 to 5
   title: string;
   amount: number;
   category: ExpenseCategory;

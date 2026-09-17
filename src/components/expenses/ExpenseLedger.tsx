@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useAllExpenses } from '../../db/repositories/expenseRepository';
+import { useCategoryMap, resolveCategory, useUserSettings } from '../../db/repositories/settingsRepository';
 import type { ExpenseRecord, ExpenseState } from '../../types/expenseFsm';
 import { deleteExpense } from '../../services/expenseService';
 import {
@@ -8,14 +9,18 @@ import {
   Trash2,
   Filter
 } from 'lucide-react';
-import { getStateBadge } from '../../utils/badgeHelpers';
+import { getStateBadge, renderCategoryIconByName } from '../../utils/badgeHelpers';
 
 export const ExpenseLedger: React.FC = () => {
   const { t, lang } = useLanguage();
+  const categoryMap = useCategoryMap();
+  const settings = useUserSettings();
+
   const [selectedWeek, setSelectedWeek] = useState<number | 'all'>('all');
   const [selectedState, setSelectedState] = useState<ExpenseState | 'all'>('all');
 
   const expenses = useAllExpenses();
+  const currencySymbol = lang === 'ar' ? settings.currencySymbolAr : settings.currencySymbolEn;
 
   const filteredExpenses = expenses.filter((item: ExpenseRecord) => {
     if (selectedWeek !== 'all' && item.envelopeWeek !== selectedWeek) {
@@ -28,7 +33,7 @@ export const ExpenseLedger: React.FC = () => {
   });
 
   const handleDelete = async (id: string) => {
-    if (window.confirm('Delete this expense record?')) {
+    if (window.confirm(lang === 'ar' ? 'هل تريد حذف هذا المصروف؟' : 'Delete this expense record?')) {
       await deleteExpense(id);
     }
   };
@@ -70,6 +75,7 @@ export const ExpenseLedger: React.FC = () => {
               <option value="2">W2</option>
               <option value="3">W3</option>
               <option value="4">W4</option>
+              <option value="5">W5</option>
             </select>
           </div>
 
@@ -101,6 +107,8 @@ export const ExpenseLedger: React.FC = () => {
           {filteredExpenses.map((expense: ExpenseRecord) => {
             const isAborted = expense.state === 'aborted';
             const isCooling = expense.state === 'cooling_off';
+            const categoryObj = resolveCategory(expense.category, categoryMap);
+            const categoryName = lang === 'ar' ? categoryObj.nameAr : categoryObj.nameEn;
 
             return (
               <div
@@ -114,6 +122,9 @@ export const ExpenseLedger: React.FC = () => {
                 }`}
               >
                 <div className="flex items-center gap-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-surface-border bg-surface-sunken text-brand shrink-0">
+                    {renderCategoryIconByName(categoryObj.iconName, 'h-4 w-4')}
+                  </div>
                   <div>
                     <div className="flex items-center gap-2">
                       <p className={`text-xs font-bold leading-snug ${isAborted ? 'line-through text-text-muted' : 'text-text-primary'}`}>
@@ -122,7 +133,7 @@ export const ExpenseLedger: React.FC = () => {
                       {getStateBadge(expense.state, t.expenses)}
                     </div>
                     <div className="flex items-center gap-2 mt-1 text-[11px] text-text-secondary">
-                      <span>{t.categories[expense.category] || expense.category}</span>
+                      <span>{categoryName}</span>
                       <span>•</span>
                       <span>W{expense.envelopeWeek}</span>
                       <span>•</span>
@@ -142,7 +153,7 @@ export const ExpenseLedger: React.FC = () => {
                           : 'text-text-primary'
                       }`}
                     >
-                      {isAborted ? `+${expense.amount.toLocaleString()}` : expense.amount.toLocaleString()} {t.currency}
+                      {isAborted ? `+${expense.amount.toLocaleString()}` : expense.amount.toLocaleString()} {currencySymbol}
                     </p>
                     {isAborted && (
                       <span className="text-[10px] font-semibold text-guardrail-safe">
@@ -168,3 +179,4 @@ export const ExpenseLedger: React.FC = () => {
     </div>
   );
 };
+

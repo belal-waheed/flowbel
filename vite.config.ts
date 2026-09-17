@@ -24,9 +24,9 @@ export default defineConfig({
         'llms-full.txt'
       ],
       manifest: {
-        name: 'Flowbel - دليلك العملي للمال وأصول التعامل في الشارع',
+        name: 'Flowbel - إدارة مالية واعية وقرارات يومية متزنة',
         short_name: 'Flowbel',
-        description: 'Local-first personal finance companion and Egyptian street-smarts playbooks for students and young professionals.',
+        description: 'Mindful budgeting and practical decision clarity. Local-first envelope budgeting and practical decision playbooks.',
         theme_color: '#F8F5EE',
         background_color: '#F8F5EE',
         display: 'standalone',

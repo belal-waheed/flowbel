@@ -75,7 +75,7 @@
         font-size="16" 
         font-weight="600" 
         fill="#1C1917" 
-        direction="rtl">دليلك العملي للمال وأصول التعامل في الشارع</text>
+        direction="rtl">إدارة مالية واعية وقرارات يومية متزنة</text>
 
   <!-- Secondary Descriptor (English) -->
   <text x="156" y="116" 
@@ -83,5 +83,5 @@
         font-size="13" 
         font-weight="500" 
         letter-spacing="0.01em" 
-        fill="#57534E">Your practical guide to money and real-world street smarts</text>
+        fill="#57534E">Mindful budgeting and practical decision clarity</text>
 </svg>

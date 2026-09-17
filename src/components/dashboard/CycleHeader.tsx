@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../../hooks/useLanguage';
+import { useUserSettings } from '../../db/repositories/settingsRepository';
 import { Calendar, Wallet, Shield, Flame, TrendingUp } from 'lucide-react';
 import type { BudgetCycle } from '../../types/finance';
 
@@ -9,6 +10,7 @@ interface CycleHeaderProps {
 
 export const CycleHeader: React.FC<CycleHeaderProps> = ({ cycle }) => {
   const { t, lang } = useLanguage();
+  const settings = useUserSettings();
 
   if (!cycle) {
     return (
@@ -22,14 +24,16 @@ export const CycleHeader: React.FC<CycleHeaderProps> = ({ cycle }) => {
   const startDate = new Date(cycle.startDate);
   const endDate = new Date(cycle.endDate);
 
+  const totalCycleDays = (cycle.envelopes.length || 4) * 7;
   const elapsedMs = Math.max(0, now.getTime() - startDate.getTime());
-  const currentDayIndex = Math.min(28, Math.floor(elapsedMs / (24 * 60 * 60 * 1000)) + 1);
+  const currentDayIndex = Math.min(totalCycleDays, Math.floor(elapsedMs / (24 * 60 * 60 * 1000)) + 1);
   const daysLeftInCycle = Math.max(0, Math.ceil((endDate.getTime() - now.getTime()) / (24 * 60 * 60 * 1000)));
 
   // Total committed variable expenses across all weeks
   const committedExpenses = cycle.envelopes.reduce((acc, env) => acc + env.spentAmount, 0);
   const variableRemaining = Math.max(0, cycle.totalAllowance - cycle.totalFixedCosts - committedExpenses);
   const safeDailyBurn = Number((variableRemaining / Math.max(1, daysLeftInCycle)).toFixed(1));
+  const currencySymbol = lang === 'ar' ? settings.currencySymbolAr : settings.currencySymbolEn;
 
   const formatDate = (isoStr: string) => {
     const d = new Date(isoStr);
@@ -60,7 +64,7 @@ export const CycleHeader: React.FC<CycleHeaderProps> = ({ cycle }) => {
 
           <div className="flex items-center gap-2 rounded-xl bg-surface-sunken px-3.5 py-1.5 border border-surface-border text-xs">
             <span className="font-semibold text-text-primary">
-              {t.dashboard.dayNumber} {currentDayIndex} / 28
+              {t.dashboard.dayNumber} {currentDayIndex} / {totalCycleDays}
             </span>
             <span className="text-text-muted">•</span>
             <span className="text-text-secondary">
@@ -78,7 +82,7 @@ export const CycleHeader: React.FC<CycleHeaderProps> = ({ cycle }) => {
               <span>{t.dashboard.allowance}</span>
             </div>
             <p className="text-lg font-bold text-text-primary">
-              {cycle.totalAllowance.toLocaleString()} <span className="text-xs font-medium text-text-muted">{t.currency}</span>
+              {cycle.totalAllowance.toLocaleString()} <span className="text-xs font-medium text-text-muted">{currencySymbol}</span>
             </p>
           </div>
 
@@ -89,7 +93,7 @@ export const CycleHeader: React.FC<CycleHeaderProps> = ({ cycle }) => {
               <span>{t.dashboard.fixedCommitted}</span>
             </div>
             <p className="text-lg font-bold text-text-primary">
-              {cycle.totalFixedCosts.toLocaleString()} <span className="text-xs font-medium text-text-muted">{t.currency}</span>
+              {cycle.totalFixedCosts.toLocaleString()} <span className="text-xs font-medium text-text-muted">{currencySymbol}</span>
             </p>
           </div>
 
@@ -100,7 +104,7 @@ export const CycleHeader: React.FC<CycleHeaderProps> = ({ cycle }) => {
               <span className="text-text-secondary font-medium">{t.dashboard.variablePool}</span>
             </div>
             <p className="text-lg font-bold text-brand">
-              {variableRemaining.toLocaleString()} <span className="text-xs font-medium text-text-muted">{t.currency}</span>
+              {variableRemaining.toLocaleString()} <span className="text-xs font-medium text-text-muted">{currencySymbol}</span>
             </p>
           </div>
 
@@ -111,7 +115,7 @@ export const CycleHeader: React.FC<CycleHeaderProps> = ({ cycle }) => {
               <span className="text-text-secondary font-medium">{t.dashboard.safeDailyBurn}</span>
             </div>
             <p className="text-lg font-bold text-guardrail-cooling">
-              {safeDailyBurn} <span className="text-xs font-medium text-text-muted">{t.currency} {t.dashboard.perDay}</span>
+              {safeDailyBurn} <span className="text-xs font-medium text-text-muted">{currencySymbol} {t.dashboard.perDay}</span>
             </p>
           </div>
         </div>
@@ -119,3 +123,4 @@ export const CycleHeader: React.FC<CycleHeaderProps> = ({ cycle }) => {
     </div>
   );
 };
+

@@ -16,7 +16,22 @@ import {
   GraduationCap,
   Home,
   ShieldCheck,
-  Wifi
+  Wifi,
+  ShoppingBag,
+  Utensils,
+  Smartphone,
+  Tv,
+  ShieldAlert,
+  Sparkles,
+  Tag,
+  Heart,
+  Car,
+  BookOpen,
+  Briefcase,
+  Wrench,
+  Plane,
+  Music,
+  Gift
 } from 'lucide-react';
 
 /**
@@ -105,8 +120,57 @@ export function getStateBadge(
   }
 }
 
+export const AVAILABLE_CATEGORY_ICONS = [
+  'ShoppingBag',
+  'Bus',
+  'GraduationCap',
+  'Utensils',
+  'Smartphone',
+  'Tv',
+  'ShieldAlert',
+  'Sparkles',
+  'Tag',
+  'Heart',
+  'Car',
+  'BookOpen',
+  'Coffee',
+  'Briefcase',
+  'Home',
+  'Wrench',
+  'Dumbbell',
+  'Plane',
+  'Music',
+  'Gift'
+] as const;
+
+export function renderCategoryIconByName(iconName: string, className: string = 'h-4 w-4'): React.ReactNode {
+  switch (iconName) {
+    case 'ShoppingBag': return <ShoppingBag className={className} />;
+    case 'Bus': return <Bus className={className} />;
+    case 'GraduationCap': return <GraduationCap className={className} />;
+    case 'Utensils': return <Utensils className={className} />;
+    case 'Smartphone': return <Smartphone className={className} />;
+    case 'Tv': return <Tv className={className} />;
+    case 'ShieldAlert': return <ShieldAlert className={className} />;
+    case 'Sparkles': return <Sparkles className={className} />;
+    case 'Tag': return <Tag className={className} />;
+    case 'Heart': return <Heart className={className} />;
+    case 'Car': return <Car className={className} />;
+    case 'BookOpen': return <BookOpen className={className} />;
+    case 'Coffee': return <Coffee className={className} />;
+    case 'Briefcase': return <Briefcase className={className} />;
+    case 'Home': return <Home className={className} />;
+    case 'Wrench': return <Wrench className={className} />;
+    case 'Dumbbell': return <Dumbbell className={className} />;
+    case 'Plane': return <Plane className={className} />;
+    case 'Music': return <Music className={className} />;
+    case 'Gift': return <Gift className={className} />;
+    default: return <Tag className={className} />;
+  }
+}
+
 /**
- * Returns a Lucide vector icon for a fixed obligation category.
+ * Returns a Lucide vector icon for a category identifier or icon name.
  */
 export function getCategoryIcon(category: string): React.ReactNode {
   switch (category) {
@@ -126,8 +190,22 @@ export function getCategoryIcon(category: string): React.ReactNode {
     case 'academic':
     case 'study':
       return <GraduationCap className="h-4 w-4" />;
+    case 'groceries':
+      return <ShoppingBag className="h-4 w-4" />;
+    case 'dining':
+      return <Utensils className="h-4 w-4" />;
+    case 'tech':
+      return <Smartphone className="h-4 w-4" />;
+    case 'leisure':
+      return <Tv className="h-4 w-4" />;
+    case 'emergency':
+      return <ShieldAlert className="h-4 w-4" />;
+    case 'discretionary':
+      return <Sparkles className="h-4 w-4" />;
     case 'travel':
-    default:
       return <Compass className="h-4 w-4" />;
+    default:
+      return renderCategoryIconByName(category, 'h-4 w-4');
   }
 }
+

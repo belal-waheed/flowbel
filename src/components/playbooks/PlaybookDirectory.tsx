@@ -61,11 +61,11 @@ export const PlaybookDirectory: React.FC<PlaybookDirectoryProps> = ({ onSelectSc
 
   const categories: Array<{ id: PlaybookCategory | 'all'; label: string }> = [
     { id: 'all', label: t.playbooks.allCategories },
-    { id: 'lending', label: lang === 'ar' ? 'إقراض وسلف' : 'Lending' },
-    { id: 'tech', label: lang === 'ar' ? 'إلكترونيات ولابتوب' : 'Used Tech' },
-    { id: 'housing', label: lang === 'ar' ? 'سكن وتأمين' : 'Housing' },
-    { id: 'negotiation', label: lang === 'ar' ? 'تفاوض وتجار' : 'Negotiation' },
-    { id: 'emergency', label: lang === 'ar' ? 'طوارئ وأزمات' : 'Emergency' }
+    { id: 'lending', label: lang === 'ar' ? 'إقراض وحدود مالية' : 'Lending' },
+    { id: 'tech', label: lang === 'ar' ? 'إلكترونيات ومستعمل' : 'Used Tech' },
+    { id: 'housing', label: lang === 'ar' ? 'سكن والتزامات' : 'Housing' },
+    { id: 'negotiation', label: lang === 'ar' ? 'تفاوض وتسعير' : 'Negotiation' },
+    { id: 'emergency', label: lang === 'ar' ? 'طوارئ واحتياطي' : 'Emergency' }
   ];
 
   return (
@@ -138,15 +138,15 @@ export const PlaybookDirectory: React.FC<PlaybookDirectoryProps> = ({ onSelectSc
                 {lang === 'ar' ? scenario.subtitleAr : scenario.subtitleEn}
               </p>
 
-              {/* Golden Rule snippet */}
-              <div className="rounded-xl border border-guardrail-cooling/30 bg-guardrail-cooling-bg p-2.5 text-[11px] text-guardrail-cooling">
-                <strong className="block text-[10px] uppercase tracking-wider text-guardrail-cooling mb-0.5">
+              {/* Core Principle Callout */}
+              <div className="rounded-xl border border-surface-border bg-surface-sunken p-2.5 text-[11px] text-text-primary">
+                <strong className="block text-[10px] font-bold uppercase tracking-wider text-brand mb-0.5">
                   {t.playbooks.goldenRuleBadge}
                 </strong>
                 <p className="line-clamp-2">
                   {lang === 'ar'
-                    ? scenario.goldenRuleAr.replace(/^القاعدة الذهبية:\s*/, '')
-                    : scenario.goldenRuleEn.replace(/^Golden Rule:\s*/i, '')}
+                    ? scenario.goldenRuleAr.replace(/^(القاعدة الذهبية|المبدأ الأساسي):\s*/, '')
+                    : scenario.goldenRuleEn.replace(/^(Golden Rule|Core Principle):\s*/i, '')}
                 </p>
               </div>
             </div>

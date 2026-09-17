@@ -1,50 +1,50 @@
 # Flowbel
 
-> Flowbel is a hardened, local-first personal finance companion and Egyptian street-smarts playbook Progressive Web App (PWA) engineered for university students and young professionals. It enforces disciplined 4-week payday envelope budgeting, a mandatory 24-hour cooling-off lock for impulse expenses, and battle-tested real-world protocols for navigating Egyptian transactions with zero cloud telemetry.
+> Flowbel is an open-source, local-first personal finance companion and practical decision playbook Progressive Web App (PWA) engineered for university students and young professionals. It enforces disciplined weekly envelope budgeting (4 or 5 weeks), a configurable cooling-off lock for discretionary expenses, and structured cultural decision protocols with zero cloud telemetry.
 
 ## Core Identity & Positioning
 - Project Name: Flowbel
 - Canonical URL: https://flowbel.vercel.app
-- Primary Tagline (Arabic): دليلك العملي للمال وأصول التعامل في الشارع
-- Secondary Tagline (English): Your practical guide to money and real-world street smarts
-- Target Audience: Egyptian university students, recent graduates, and young professionals navigating constrained monthly allowances and volatile purchasing environments.
-- Primary Currency: Egyptian Pound (EGP / ج.م)
+- Primary Tagline (Arabic): إدارة مالية واعية وقرارات يومية متزنة
+- Secondary Tagline (English): Mindful budgeting and practical decision clarity
+- Target Audience: University students, recent graduates, and young professionals navigating constrained budgets and everyday financial decisions.
+- Primary Currency: Multi-currency support (Default: EGP / ج.م, USD $, EUR €, SAR ر.س, AED د.إ)
 - Data Privacy Guarantee: 100% on-device storage (IndexedDB via Dexie.js). Zero backend databases, zero analytics SDKs, zero telemetry.
 
 ## Architectural Pillars
 
-### 1. 4-Week Payday Envelope Cycle
-- Fixed First Allocation: Fixed survival obligations (rent, subscriptions, medication, tuition) are quarantined from the monthly allowance on Day 1.
-- Variable Pool Subdivision: Remaining funds form the variable liquidity pool, divided equally across 4 weekly envelopes.
+### 1. Payday Envelope Cycle (4 or 5 Weeks)
+- Fixed First Allocation: Fixed survival obligations and commitments (rent, subscriptions, medication, tuition) are quarantined on Day 1.
+- Variable Pool Subdivision: Remaining funds form the variable liquidity pool, distributed across 4 or 5 weekly envelopes with configurable weighting or even distribution.
 - Safe Daily Burn Rate: Dynamic real-time calculation dividing unspent cycle liquidity by remaining days in the cycle.
-- Surplus Roll-Forward: Unspent weekly funds roll forward into subsequent weeks or buffer reserves.
+- Solvency Floor: Non-negotiable validation requiring total allowance to cover fixed obligations before cycle creation.
 
-### 2. 24-Hour Cooling-Off Impulse Guardrail
-- Non-Essential Interception: Any non-essential discretionary expense triggers an involuntary 24-hour cooldown lock.
-- Four Stoic Reflection Invariants:
-  1. Need vs Impulse Want: Is this survival/academic necessity or transient dopamine?
-  2. 30-Day Dormancy Test: Will this item be actively utilized in 30 days or discarded?
-  3. Weekly Envelope Impact: Can the current week's envelope bear this cost without starving subsequent days?
+### 2. Mindful Spending Cooling-Off Guardrail
+- Non-Essential Interception: Any non-essential discretionary expense exceeding the user-defined threshold triggers a cooling-off lock (default 24 hours).
+- Four Rational Reflection Invariants:
+  1. Need vs Impulse Want: Is this an essential priority or transient emotional impulse?
+  2. 30-Day Utility Test: Will this item be in active utilization after 30 days?
+  3. Weekly Envelope Impact: Can the current week's envelope bear this cost comfortably?
   4. Cheaper Alternative: Has a second-hand, shared, or open-source substitute been audited?
-- FSM State Resolution: When 24 hours elapse, the user explicitly decides to commit the purchase or abort it as a financial discipline victory.
+- FSM State Resolution: When cooling hours elapse, the user explicitly decides to commit the purchase or abort it as a financial discipline victory.
 
-### 3. Egyptian Life & Street Playbooks
-- Structured procedural playbooks for navigating critical friction points in Egyptian daily life.
-- Word-for-word Egyptian Arabic dialogue scripts and defensive negotiation tactics.
+### 3. Practical Decision Playbooks
+- Structured procedural playbooks for navigating critical friction points in daily life.
+- Word-for-word Egyptian Arabic dialogue scripts and calm negotiation tactics.
 - Step-by-step physical verification checklists.
-- Golden Rules for high-stakes financial and practical street transactions.
+- Core Principles for high-stakes financial and practical transactions.
 - Five Implemented Playbooks:
   1. Lending Money & Boundaries (إقراض المال والحدود الشخصية): Defending personal liquidity without severing social ties.
   2. Buying Used Tech & Laptops (شراء الإلكترونيات واللابتوبات المستعملة): Hardware stress testing and anti-scam diagnostic procedures.
-  3. Tenancy & Shared Housing (السكن والتعامل مع السماسرة والشركاء): Deposit security, utility baseline audits, and flatmate bill splitting.
-  4. Calm Negotiation with Vendors (التفاوض الهادئ مع التجار والحرفيين): 3-shop reconnaissance, silence anchoring, and the physical walk-away test.
-  5. Emergency Protocol & Buffer (بروتوكول الطوارئ واحتياطي الأزمات): Untouchable 300 EGP physical cash anchor, first-aid pharmacy kit, and offline digital vault.
+  3. Tenancy & Shared Housing (السكن والتعامل مع المشرفين والشركاء): Deposit security, utility baseline audits, and flatmate bill splitting.
+  4. Negotiation with Vendors (التفاوض الموضوعي مع التجار ومقدمي الخدمات): 3-quote reconnaissance, silence anchoring, and the physical walk-away test.
+  5. Emergency Protocol & Buffer (بروتوكول الطوارئ واحتياطي الأزمات): Untouchable cash anchor, first-aid pharmacy kit, and offline digital vault.
 
 ### 4. Technical Architecture
 - Runtime: Browser PWA (Offline-First)
 - Framework: React 19 + TypeScript (Strict)
 - Styling: Tailwind CSS v4 (@theme tokens, warm cream palette #F8F5EE, deep terracotta #8C431D, roasted amber #B45309)
-- Persistence: Client-side IndexedDB via Dexie.js and dexie-react-hooks
+- Persistence: Client-side IndexedDB via Dexie.js (Schema v2) and dexie-react-hooks
 - Verification & Linter: Oxlint + TypeScript Compiler
 - Design System: Lucide React vector icons, WCAG AA compliant contrast, zero unicode emojis.
 

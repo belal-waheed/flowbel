@@ -67,16 +67,23 @@ export const calculateTotalFixedCosts = (obligations: FixedObligation[]): number
 export const generateInitialCycle = (
   startDate: Date = new Date(),
   allowance: number = DEFAULT_ALLOWANCE_EGP,
-  fixedCosts: FixedObligation[] = DEFAULT_FIXED_OBLIGATIONS
+  fixedCosts: FixedObligation[] = DEFAULT_FIXED_OBLIGATIONS,
+  envelopeCount: 4 | 5 = 4,
+  envelopeWeights?: number[]
 ): BudgetCycle => {
   const totalFixed = calculateTotalFixedCosts(fixedCosts);
-  const { variablePool, weeklyAllocation } = calculateEnvelopes(allowance, totalFixed);
+  const { variablePool, weeklyAllocation, allocations } = calculateEnvelopes(
+    allowance,
+    totalFixed,
+    envelopeCount,
+    envelopeWeights
+  );
 
   const envelopes: WeeklyEnvelope[] = [];
   const startMoment = new Date(startDate);
   startMoment.setHours(0, 0, 0, 0);
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < envelopeCount; i++) {
     const weekStart = new Date(startMoment);
     weekStart.setDate(weekStart.getDate() + i * 7);
 
@@ -92,15 +99,17 @@ export const generateInitialCycle = (
       status = 'completed';
     }
 
+    const allocatedAmount = allocations[i] ?? weeklyAllocation;
+
     envelopes.push({
       weekNumber: i + 1,
       labelEn: `Week ${i + 1}`,
       labelAr: `الأسبوع ${i + 1}`,
       startDate: weekStart.toISOString(),
       endDate: weekEnd.toISOString(),
-      allocatedAmount: weeklyAllocation,
+      allocatedAmount,
       spentAmount: 0,
-      remainingAmount: weeklyAllocation,
+      remainingAmount: allocatedAmount,
       status
     });
   }
@@ -111,7 +120,7 @@ export const generateInitialCycle = (
   }
 
   const cycleEnd = new Date(startMoment);
-  cycleEnd.setDate(cycleEnd.getDate() + 27);
+  cycleEnd.setDate(cycleEnd.getDate() + (envelopeCount * 7 - 1));
   cycleEnd.setHours(23, 59, 59, 999);
 
   return {

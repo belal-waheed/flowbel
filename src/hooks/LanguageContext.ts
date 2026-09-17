@@ -36,6 +36,7 @@ export interface Translations {
     unpaid: string;
     markPaid: string;
     markUnpaid: string;
+    manageBtn: string;
   };
   expenses: {
     title: string;
@@ -113,29 +114,58 @@ export interface Translations {
     importSuccess: string;
     importFailed: string;
     savedChanges: string;
+    currencySelector: string;
+    envelopeModel: string;
+    weeks4: string;
+    weeks5: string;
+    envelopeWeights: string;
+    equalWeights: string;
+    coolingSettings: string;
+    coolingThresholdLabel: string;
+    coolingDurationLabel: string;
+    coolingToggleLabel: string;
+    manageCommitmentsBtn: string;
+    manageCategoriesBtn: string;
   };
-  categories: {
-    groceries: string;
-    transit: string;
-    study: string;
-    dining: string;
-    tech: string;
-    leisure: string;
-    emergency: string;
-    discretionary: string;
-    other: string;
+  commitmentsModal: {
+    title: string;
+    addTitle: string;
+    editTitle: string;
+    nameLabel: string;
+    namePlaceholder: string;
+    amountLabel: string;
+    dueDayLabel: string;
+    categoryLabel: string;
+    addBtn: string;
+    saveBtn: string;
+    deleteBtn: string;
+    emptyMessage: string;
+    totalLabel: string;
   };
+  categoryModal: {
+    title: string;
+    addTitle: string;
+    nameEnLabel: string;
+    nameArLabel: string;
+    iconLabel: string;
+    addBtn: string;
+    deleteBtn: string;
+    customBadge: string;
+    defaultBadge: string;
+    emptyMessage: string;
+  };
+  categories: Record<string, string>;
 }
 
 export const translations: Record<Language, Translations> = {
   en: {
     appName: 'Flowbel',
-    appTagline: 'Your practical guide to money and real-world street smarts',
+    appTagline: 'Mindful budgeting and practical decision clarity.',
     currency: 'EGP',
     tabs: {
       dashboard: 'Dashboard',
       expenses: 'Expenses',
-      playbooks: 'Playbooks',
+      playbooks: 'Decision Playbooks',
       settings: 'Settings'
     },
     dashboard: {
@@ -148,8 +178,8 @@ export const translations: Record<Language, Translations> = {
       safeDailyBurn: 'Safe Daily Burn',
       perDay: '/ day',
       weeklyEnvelopes: 'Weekly Rolling Envelopes',
-      fixedObligations: 'Fixed Obligations (Day One Anchors)',
-      fixedSubtext: 'Non-negotiable monthly foundations',
+      fixedObligations: 'Fixed Commitments',
+      fixedSubtext: 'Reserved essential monthly expenses',
       statusActive: 'Active Week',
       statusUpcoming: 'Upcoming',
       statusCompleted: 'Closed',
@@ -160,14 +190,15 @@ export const translations: Record<Language, Translations> = {
       paid: 'Paid',
       unpaid: 'Pending',
       markPaid: 'Mark as Paid',
-      markUnpaid: 'Mark as Pending'
+      markUnpaid: 'Mark as Pending',
+      manageBtn: 'Manage'
     },
     expenses: {
       title: 'Expense Tracker & Delay Guardrail',
       logNewExpense: 'Log Expense',
       coolingNotice: 'Cooling-Off Delay Triggered',
-      coolingNoticeDetail: 'Discretionary purchase exceeding 150 EGP requires reflection and a 24-hour lock.',
-      activeCoolingTimers: 'Active 24-Hour Cooling Timers',
+      coolingNoticeDetail: 'Discretionary purchase exceeding the threshold requires reflection and a cooling-off lock.',
+      activeCoolingTimers: 'Active Cooling-Off Pauses',
       ledgerTitle: 'Transaction History',
       allWeeks: 'All Weeks',
       filterState: 'Filter Status',
@@ -178,43 +209,43 @@ export const translations: Record<Language, Translations> = {
       stateReflection: 'Reflection Needed',
       noExpensesFound: 'No expenses logged for this filter.',
       noCoolingActive: 'No purchases currently in cooling-off delay.',
-      lockedFor: 'Locked for 24h cooling-off',
+      lockedFor: 'In mindful spending pause',
       unlocksIn: 'Unlocks in',
-      readyToCommit: 'Cooling period completed. Ready to commit or abort.',
+      readyToCommit: 'Cooling period concluded. Confirm purchase or cancel to preserve funds.',
       commitBtn: 'Commit Purchase',
       abortBtn: 'Abort & Save Funds',
       deleteBtn: 'Delete',
       modalTitle: 'Record New Expense',
       inputTitle: 'Description / Item Name',
-      inputAmount: 'Amount (EGP)',
+      inputAmount: 'Amount',
       inputCategory: 'Category',
       inputWeek: 'Cycle Week',
       cancelBtn: 'Cancel',
       saveBtn: 'Confirm Expense',
       proceedToReflection: 'Proceed to Reflection Checklist',
-      reflectionHeader: 'Pre-Purchase Reality Check',
-      reflectionSubtitle: 'Answer honestly to activate the 24-hour cooling-off lock.',
+      reflectionHeader: 'Mindful Spending Pause',
+      reflectionSubtitle: 'A 24-hour pause to evaluate priority and prevent impulse spending.',
       qNeedVsWant: '1. Need vs Impulse Want',
-      qNeedVsWantSub: 'Is this an absolute survival/study necessity, or a temporary emotional impulse?',
+      qNeedVsWantSub: 'Is this an absolute necessity, or a temporary emotional impulse?',
       qDormant: '2. 30-Day Dormancy Test',
       qDormantSub: 'Will you still be actively using this in 30 days, or will it gather dust?',
       qBudgetImpact: '3. Weekly Envelope Impact',
-      qBudgetImpactSub: 'Can your current weekly envelope comfortably take this hit without starving other essentials?',
+      qBudgetImpactSub: 'Can your current weekly envelope comfortably absorb this cost without impacting essentials?',
       qAlternative: '4. Alternative Explored',
-      qAlternativeSub: 'Did you check for a cheaper used, open-source, or free substitute first?',
-      submitCooling: 'Lock in 24-Hour Cooling Timer',
-      savingVictory: 'Discipline Victory!',
-      savedAlert: 'Purchase aborted. You retained this money in your budget.'
+      qAlternativeSub: 'Did you evaluate a more affordable, shared, or existing alternative first?',
+      submitCooling: 'Lock in Cooling-Off Timer',
+      savingVictory: 'Expense Reconsidered',
+      savedAlert: 'Purchase canceled. Funds preserved in your active envelope.'
     },
     playbooks: {
-      title: 'Practical Egyptian Life Playbooks',
-      subtitle: 'Hardened real-world protocols and actionable scripts',
+      title: 'Decision Playbooks',
+      subtitle: 'Structured frameworks and practical scripts for high-impact decisions',
       searchPlaceholder: 'Search scenarios, scripts, checklists...',
       allCategories: 'All Scenarios',
-      goldenRuleBadge: 'The Golden Law',
-      stepsTitle: 'Actionable Step-by-Step Checklist',
-      dialoguesTitle: 'Word-for-Word Arabic Response Scripts',
-      principlesTitle: 'Guiding Life Principles',
+      goldenRuleBadge: 'Core Principle',
+      stepsTitle: 'Verification Checklist',
+      dialoguesTitle: 'Direct Communication Scripts',
+      principlesTitle: 'Guiding Principles',
       backToList: 'Back to Playbooks',
       checklistProgress: 'Verification Progress',
       completed: 'Completed',
@@ -223,9 +254,9 @@ export const translations: Record<Language, Translations> = {
     settings: {
       title: 'Settings & Data Stewardship',
       cycleConfig: 'Budget Cycle Configuration',
-      allowanceLabel: 'Monthly Allowance (EGP)',
+      allowanceLabel: 'Monthly Allowance',
       paydayLabel: 'Payday Start Date',
-      fixedCostsHeader: 'Configured Fixed Costs',
+      fixedCostsHeader: 'Configured Fixed Commitments',
       updateCycleBtn: 'Update Cycle Parameters',
       dataManagement: 'Local Data Management',
       exportBackup: 'Export Encrypted JSON Backup',
@@ -233,32 +264,71 @@ export const translations: Record<Language, Translations> = {
       importBackup: 'Import JSON Backup',
       importDesc: 'Restore database from an exported Flowbel JSON backup file.',
       resetDefaults: 'Reset to Default Baseline',
-      resetDesc: 'Restore standard baseline: 6,800 EGP allowance and 3,150 EGP fixed obligations.',
+      resetDesc: 'Restore standard baseline: allowance and fixed obligations.',
       resetConfirm: 'Are you sure? This will wipe your current records and restore default seed data.',
       importSuccess: 'Backup imported and verified successfully.',
       importFailed: 'Failed to import backup. Please ensure the JSON file matches Flowbel schema.',
-      savedChanges: 'Settings updated successfully.'
+      savedChanges: 'Settings updated successfully.',
+      currencySelector: 'Active Currency',
+      envelopeModel: 'Envelope Model',
+      weeks4: '4 Weeks (Standard)',
+      weeks5: '5 Weeks (Extended)',
+      envelopeWeights: 'Envelope Distribution',
+      equalWeights: 'Equal Split',
+      coolingSettings: 'Mindful Spending Guardrail',
+      coolingThresholdLabel: 'Threshold to Trigger Pause',
+      coolingDurationLabel: 'Cooldown Pause Duration (Hours)',
+      coolingToggleLabel: 'Enable Mindful Spending Guardrail',
+      manageCommitmentsBtn: 'Manage Fixed Commitments',
+      manageCategoriesBtn: 'Manage Custom Categories'
+    },
+    commitmentsModal: {
+      title: 'Fixed Commitments',
+      addTitle: 'Add New Commitment',
+      editTitle: 'Edit Commitment',
+      nameLabel: 'Commitment Title',
+      namePlaceholder: 'e.g., Housing Rent, Internet...',
+      amountLabel: 'Amount',
+      dueDayLabel: 'Due Day of Month (1-31)',
+      categoryLabel: 'Category',
+      addBtn: 'Add Commitment',
+      saveBtn: 'Save Changes',
+      deleteBtn: 'Delete',
+      emptyMessage: 'No fixed commitments recorded yet.',
+      totalLabel: 'Total Fixed Commitments'
+    },
+    categoryModal: {
+      title: 'Custom Categories',
+      addTitle: 'Add New Category',
+      nameEnLabel: 'Name (English)',
+      nameArLabel: 'Name (Arabic)',
+      iconLabel: 'Icon',
+      addBtn: 'Add Category',
+      deleteBtn: 'Remove',
+      customBadge: 'Custom',
+      defaultBadge: 'Standard',
+      emptyMessage: 'No categories available.'
     },
     categories: {
       groceries: 'Groceries & Nutrition',
-      transit: 'Transit & Commute',
+      transit: 'Transit & Mobility',
       study: 'Study & Academics',
-      dining: 'Dining & Takeout',
-      tech: 'Tech & Electronics',
-      leisure: 'Leisure & Outings',
-      emergency: 'Medical & Emergency',
-      discretionary: 'Discretionary / Impulse',
-      other: 'Other'
+      dining: 'Dining & Cafes',
+      tech: 'Tech & Subscriptions',
+      leisure: 'Leisure & Hobbies',
+      emergency: 'Emergency & Health',
+      discretionary: 'Discretionary / Special',
+      other: 'Other Miscellaneous'
     }
   },
   ar: {
     appName: 'Flowbel',
-    appTagline: 'دليلك العملي للمال وأصول التعامل في الشارع',
+    appTagline: 'إدارة مالية واعية وقرارات يومية متزنة.',
     currency: 'ج.م',
     tabs: {
       dashboard: 'المؤشرات',
       expenses: 'المصروفات',
-      playbooks: 'أدلة الحياة',
+      playbooks: 'أدلة القرارات',
       settings: 'الإعدادات'
     },
     dashboard: {
@@ -270,9 +340,9 @@ export const translations: Record<Language, Translations> = {
       variablePool: 'السيولة الحرة',
       safeDailyBurn: 'معدل الإنفاق اليومي الآمن',
       perDay: '/ يومياً',
-      weeklyEnvelopes: 'مظاريف الأسابيع الأربعة',
-      fixedObligations: 'الالتزامات الثابتة (خط الدفاع الأول)',
-      fixedSubtext: 'مصاريف أساسية محجوزة من أول الشهر',
+      weeklyEnvelopes: 'مظاريف الميزانية الأسبوعية',
+      fixedObligations: 'الالتزامات الثابتة',
+      fixedSubtext: 'المصروفات الأساسية المحجوزة شهرياً',
       statusActive: 'الأسبوع الجاري',
       statusUpcoming: 'قادم',
       statusCompleted: 'منتهي',
@@ -283,61 +353,62 @@ export const translations: Record<Language, Translations> = {
       paid: 'مدفوع',
       unpaid: 'معلق',
       markPaid: 'تحديد كمدفوع',
-      markUnpaid: 'تحديد كمعلق'
+      markUnpaid: 'تحديد كمعلق',
+      manageBtn: 'إدارة'
     },
     expenses: {
       title: 'سجل المصروفات وفلتر التأني',
       logNewExpense: 'تسجيل مصروف',
       coolingNotice: 'تفعيل مهلة التفكير الإلزامية',
-      coolingNoticeDetail: 'أي مصروف غير ضروري يتجاوز 150 جنيهاً يخضع لأسئلة التقييم وقفل لمدة 24 ساعة.',
-      activeCoolingTimers: 'مشتريات قيد مهلة التفكير (24 ساعة)',
+      coolingNoticeDetail: 'أي مصروف غير ضروري يتجاوز الحد المالي يخضع لأسئلة التقييم وقفل التهدئة.',
+      activeCoolingTimers: 'نفقات قيد مهلة التفكير والتهدئة',
       ledgerTitle: 'سجل الحركات المالية',
       allWeeks: 'كل الأسابيع',
       filterState: 'تصفية الحالة',
       allStates: 'كل الحالات',
       stateCommitted: 'مؤكد ومنفق',
-      stateCooling: 'قيد الانتظار (24 ساعة)',
+      stateCooling: 'قيد الانتظار',
       stateAborted: 'ملغي (وفورات ناجحة)',
       stateReflection: 'يحتاج تقييم',
       noExpensesFound: 'لا توجد مصروفات مسجلة بهذا الفلتر.',
       noCoolingActive: 'لا توجد مشتريات معلقة قيد مهلة التفكير حالياً.',
-      lockedFor: 'مغلق لمدة 24 ساعة للتحقق من الرغبة',
+      lockedFor: 'قيد مهلة التفكير والإنفاق المتزن',
       unlocksIn: 'يتاح التأكيد بعد',
-      readyToCommit: 'انتهت مهلة التأني. يمكنك الآن إتمام الشراء أو الإلغاء وتوفير المال.',
+      readyToCommit: 'انتهت مهلة التأني. يمكنك تأكيد الشراء أو التراجع والاحتفاظ بالرصيد.',
       commitBtn: 'تأكيد الشراء والخصم',
       abortBtn: 'إلغاء وتوفير المبلغ',
       deleteBtn: 'حذف',
       modalTitle: 'تسجيل مصروف جديد',
       inputTitle: 'البيان / اسم السلعة',
-      inputAmount: 'المبلغ (جنيه مصري)',
+      inputAmount: 'المبلغ',
       inputCategory: 'التصنيف',
       inputWeek: 'أسبوع المظروف',
       cancelBtn: 'إلغاء',
       saveBtn: 'تثبيت المصروف',
       proceedToReflection: 'الانتقال لأسئلة التقييم',
-      reflectionHeader: 'مراجعة الرغبة والضرورة',
-      reflectionSubtitle: 'أجب بصدق لتفعيل مهلة الـ 24 ساعة والتأكد من عدم الندم.',
+      reflectionHeader: 'مهلة التفكير والإنفاق المتزن',
+      reflectionSubtitle: 'مهلة 24 ساعة لتقييم الاحتياج الفعلي والحد من الشراء الاندفاعي.',
       qNeedVsWant: '1. حاجة حقيقية أم رغبة عاطفية؟',
       qNeedVsWantSub: 'هل هذه السلعة ضرورية لمعيشتك أو دراستك، أم مجرد رغبة وقتية قابلة للتأجيل؟',
       qDormant: '2. اختبار الـ 30 يوماً',
       qDormantSub: 'هل ستظل تستخدم هذا الشيء بانتظام بعد شهر من الآن، أم سيتحول لعبء مهمل؟',
       qBudgetImpact: '3. أثر المظروف الأسبوعي',
-      qBudgetImpactSub: 'هل يستطيع متبقي مخصصك الأسبوعي تحمل هذه التكلفة دون حرمان نفسك من الطعام أو الأساسيات؟',
+      qBudgetImpactSub: 'هل يستطيع متبقي مخصصك الأسبوعي تحمل هذه التكلفة دون حرمان نفسك من الأساسيات؟',
       qAlternative: '4. بحث البديل الأوفر',
-      qAlternativeSub: 'هل بحثت عن بديل مستعمل بحالة ممتازة، أو حل مجاني، أو استعارة قبل الشراء؟',
-      submitCooling: 'تفعيل قفل مهلة الـ 24 ساعة',
-      savingVictory: 'انتصار في الانضباط الذاتي!',
-      savedAlert: 'تم إلغاء الشراء بنجاح والاحتفاظ بالمال في ميزانيتك.'
+      qAlternativeSub: 'هل بحثت عن بديل أكثر اقتصاداً أو حل عملي قبل الشراء؟',
+      submitCooling: 'تفعيل قفل مهلة التأني',
+      savingVictory: 'قرار متزن وتوفير مستحق',
+      savedAlert: 'تم التراجع عن الشراء والاحتفاظ بالرصيد في ميزانيتك.'
     },
     playbooks: {
-      title: 'أدلة الحياة الواقعية في مصر',
-      subtitle: 'بروتوكولات عملية وسيناريوهات كلامية للتعامل الرصين',
+      title: 'أدلة القرارات المالية واليومية',
+      subtitle: 'أطر عملية ونماذج تواصل موضوعية للقرارات المالية واليومية',
       searchPlaceholder: 'ابحث في السيناريوهات، الفحوصات، أو النصوص...',
       allCategories: 'جميع السيناريوهات',
-      goldenRuleBadge: 'القاعدة الذهبية',
-      stepsTitle: 'خطوات الفحص والتأكد العملية',
-      dialoguesTitle: 'سيناريوهات الرد والكلام المباشر',
-      principlesTitle: 'المبادئ الحاكمة',
+      goldenRuleBadge: 'المبدأ الأساسي',
+      stepsTitle: 'قائمة التحقق المنهجية',
+      dialoguesTitle: 'صيغ ونماذج التواصل الموضوعي',
+      principlesTitle: 'المبادئ التوجيهية',
       backToList: 'العودة لجميع الأدلة',
       checklistProgress: 'نسبة الإنجاز والتحقق',
       completed: 'مكتمل',
@@ -346,8 +417,8 @@ export const translations: Record<Language, Translations> = {
     settings: {
       title: 'الإعدادات وإدارة البيانات',
       cycleConfig: 'إعدادات دورة المصروف',
-      allowanceLabel: 'المصروف الشهري الكلي (ج.م)',
-      paydayLabel: 'تاريخ بداية الشهر المالي (يوم القبض)',
+      allowanceLabel: 'المصروف الشهري الكلي',
+      paydayLabel: 'تاريخ بداية الشهر المالي (يوم الاستلام)',
       fixedCostsHeader: 'الالتزامات الثابتة المسجلة',
       updateCycleBtn: 'تحديث بيانات الدورة',
       dataManagement: 'إدارة البيانات المحلية',
@@ -356,22 +427,61 @@ export const translations: Record<Language, Translations> = {
       importBackup: 'استيراد نسخة احتياطية',
       importDesc: 'استعادة كامل السجلات والبيانات من ملف JSON سابق.',
       resetDefaults: 'استعادة الإعدادات الأصلية',
-      resetDesc: 'إعادة ضبط الميزانية الأساسية: مصروف 6,800 ج والتزامات ثابتة 3,150 ج.',
+      resetDesc: 'إعادة ضبط الميزانية الأساسية والالتزامات الثابتة الافتراضية.',
       resetConfirm: 'هل أنت متأكد؟ سيتم مسح بياناتك الحالية واسترجاع القيم الافتراضية.',
       importSuccess: 'تم استيراد النسخة الاحتياطية والتحقق منها بنجاح.',
       importFailed: 'فشل استيراد النسخة. تأكد من صحة ملف JSON.',
-      savedChanges: 'تم حفظ التعديلات بنجاح.'
+      savedChanges: 'تم حفظ التعديلات بنجاح.',
+      currencySelector: 'العملة المعتمدة',
+      envelopeModel: 'نظام المظاريف الأسبوعية',
+      weeks4: '4 أسابيع (الافتراضي)',
+      weeks5: '5 أسابيع (الموسع)',
+      envelopeWeights: 'توزيع مخصصات المظاريف',
+      equalWeights: 'توزيع متساوي',
+      coolingSettings: 'حارس التهدئة والإنفاق المتزن',
+      coolingThresholdLabel: 'الحد الأدنى لتفعيل مهلة التأني',
+      coolingDurationLabel: 'مدة مهلة التأني (بالساعات)',
+      coolingToggleLabel: 'تفعيل حارس الإنفاق المتزن',
+      manageCommitmentsBtn: 'إدارة الالتزامات الثابتة',
+      manageCategoriesBtn: 'إدارة وتخصيص التصنيفات'
+    },
+    commitmentsModal: {
+      title: 'إدارة الالتزامات الثابتة',
+      addTitle: 'إضافة التزام جديد',
+      editTitle: 'تعديل الالتزام',
+      nameLabel: 'اسم الالتزام',
+      namePlaceholder: 'مثال: إيجار السكن، اشتراك الإنترنت...',
+      amountLabel: 'المبلغ',
+      dueDayLabel: 'يوم الاستحقاق في الشهر (1-31)',
+      categoryLabel: 'التصنيف',
+      addBtn: 'إضافة التزام',
+      saveBtn: 'حفظ التعديلات',
+      deleteBtn: 'حذف',
+      emptyMessage: 'لا توجد التزامات ثابتة مسجلة حالياً.',
+      totalLabel: 'إجمالي الالتزامات الثابتة'
+    },
+    categoryModal: {
+      title: 'إدارة التصنيفات المخصصة',
+      addTitle: 'إضافة تصنيف جديد',
+      nameEnLabel: 'الاسم (بالإنجليزية)',
+      nameArLabel: 'الاسم (بالعربية)',
+      iconLabel: 'الأيقونة',
+      addBtn: 'إضافة التصنيف',
+      deleteBtn: 'حذف',
+      customBadge: 'مخصص',
+      defaultBadge: 'أساسي',
+      emptyMessage: 'لا توجد تصنيفات متاحة.'
     },
     categories: {
       groceries: 'طعام وبقالة منزلية',
-      transit: 'مواصلات وتنقل',
+      transit: 'مواصلات وانتقالات',
       study: 'دراسة ومستلزمات',
-      dining: 'أكل خارجي ودليفري',
-      tech: 'تقنية وإلكترونيات',
-      leisure: 'خروجات وترفيه',
-      emergency: 'طوارئ وصيدلية',
-      discretionary: 'مصاريف شخصية / كماليات',
-      other: 'أخرى'
+      dining: 'مطاعم ومقاهي',
+      tech: 'أدوات واشتراكات تقنية',
+      leisure: 'هوايات وترفيه',
+      emergency: 'طوارئ ورعاية صحية',
+      discretionary: 'مصروفات استثنائية',
+      other: 'نفقات متنوعة أخرى'
     }
   }
 };
@@ -385,3 +495,4 @@ export interface LanguageContextType {
 }
 
 export const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
