@@ -42,7 +42,9 @@ export const WeeklyEnvelopes: React.FC<WeeklyEnvelopesProps> = ({ cycle, onOpenL
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {cycle.envelopes.map((env) => {
-          const percentSpent = Math.min(100, Math.round((env.spentAmount / env.allocatedAmount) * 100));
+          const percentSpent = env.allocatedAmount > 0
+            ? Math.min(100, Math.round((env.spentAmount / env.allocatedAmount) * 100))
+            : (env.spentAmount > 0 ? 100 : 0);
           const isOver = env.remainingAmount < 0;
           const isCritical = percentSpent >= 85 && !isOver;
 

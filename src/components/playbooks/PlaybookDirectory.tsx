@@ -85,13 +85,13 @@ export const PlaybookDirectory: React.FC<PlaybookDirectoryProps> = ({ onSelectSc
 
       {/* Search Bar */}
       <div className="relative">
-        <Search className="absolute top-2.5 left-3 h-4 w-4 text-text-muted pointer-events-none" />
+        <Search className="absolute top-2.5 start-3 h-4 w-4 text-text-muted pointer-events-none" />
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t.playbooks.searchPlaceholder}
-          className="w-full rounded-xl border border-surface-border-strong bg-surface-card pl-9 pr-4 py-2 text-xs text-text-primary placeholder:text-text-muted focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none"
+          className="w-full rounded-xl border border-surface-border-strong bg-surface-card ps-9 pe-4 py-2 text-xs text-text-primary placeholder:text-text-muted focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none"
         />
       </div>
 

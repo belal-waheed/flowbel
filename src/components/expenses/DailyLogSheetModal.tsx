@@ -3,6 +3,7 @@ import { useLanguage } from '../../hooks/useLanguage';
 import { useUserSettings, useCategories } from '../../db/repositories/settingsRepository';
 import { createBatchExpenses, evaluateExpenseRequirements } from '../../services/expenseService';
 import { getEnvelopeForDate } from '../../services/cycleService';
+import { getLocalDateString, parseDateWithCurrentTime } from '../../utils/dateHelpers';
 import { hapticsService } from '../../services/native/hapticsService';
 import type { BudgetCycle } from '../../types/finance';
 import type { ExpenseCategory } from '../../types/expenseFsm';
@@ -47,9 +48,7 @@ export const DailyLogSheetModal: React.FC<DailyLogSheetModalProps> = ({
   const categories = useCategories();
 
   const [mode, setMode] = useState<'batch' | 'quick'>('batch');
-  const [expenseDate, setExpenseDate] = useState<string>(
-    new Date().toISOString().split('T')[0]
-  );
+  const [expenseDate, setExpenseDate] = useState<string>(() => getLocalDateString());
 
   // Quick mode state
   const [quickAmount, setQuickAmount] = useState<string>('');
@@ -157,7 +156,7 @@ export const DailyLogSheetModal: React.FC<DailyLogSheetModalProps> = ({
               category: quickCategory,
               envelopeWeek: targetWeek,
               note: quickNote.trim() || defaultTitle,
-              createdAt: new Date(expenseDate).toISOString()
+              createdAt: parseDateWithCurrentTime(expenseDate)
             }
           ],
           coolingRules
@@ -201,7 +200,7 @@ export const DailyLogSheetModal: React.FC<DailyLogSheetModalProps> = ({
             category: item.category,
             envelopeWeek: targetWeek,
             note: item.title.trim() || defaultTitle,
-            createdAt: new Date(expenseDate).toISOString()
+            createdAt: parseDateWithCurrentTime(expenseDate)
           };
         });
 

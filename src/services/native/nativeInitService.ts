@@ -2,10 +2,23 @@ import { Capacitor } from '@capacitor/core';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { App } from '@capacitor/app';
 
-export async function initNativeServices(onBackButton?: () => boolean): Promise<void> {
-  if (!Capacitor.isNativePlatform()) {
+let isInitialized = false;
+let activeBackButtonHandler: (() => boolean) | null = null;
+
+/**
+ * Registers or updates the active hardware back button handler.
+ * Handler should return true if it consumed the back event (e.g. dismissed a modal),
+ * or false if default system back navigation / minimization should occur.
+ */
+export function setNativeBackButtonHandler(handler: (() => boolean) | null): void {
+  activeBackButtonHandler = handler;
+}
+
+export async function initNativeServices(): Promise<void> {
+  if (!Capacitor.isNativePlatform() || isInitialized) {
     return;
   }
+  isInitialized = true;
 
   try {
     // Configure status bar with warm cream background and dark icons
@@ -17,10 +30,9 @@ export async function initNativeServices(onBackButton?: () => boolean): Promise<
   }
 
   try {
-    // Listen to Android hardware back button
+    // Listen to Android hardware back button (single global listener)
     await App.addListener('backButton', ({ canGoBack }) => {
-      // If a custom back handler consumed the event (e.g. closing a modal)
-      if (onBackButton && onBackButton()) {
+      if (activeBackButtonHandler && activeBackButtonHandler()) {
         return;
       }
       if (canGoBack) {

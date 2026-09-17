@@ -14,8 +14,8 @@ export const CycleHeader: React.FC<CycleHeaderProps> = ({ cycle }) => {
 
   if (!cycle) {
     return (
-      <div className="rounded-2xl border border-surface-border bg-surface-card p-6 text-center text-text-muted shadow-xs">
-        Loading cycle data...
+      <div className="rounded-2xl border border-surface-border bg-surface-card p-6 text-center text-xs font-medium text-text-muted shadow-xs">
+        {lang === 'ar' ? 'جاري تحميل بيانات الدورة...' : 'Loading cycle data...'}
       </div>
     );
   }

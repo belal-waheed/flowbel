@@ -60,7 +60,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onSelectTab }) 
               <div className="relative">
                 {tab.icon}
                 {tab.badge !== undefined && (
-                  <span className="absolute -top-1.5 -right-2.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-guardrail-cooling px-1 text-[10px] font-bold text-white shadow-xs">
+                  <span className="absolute -top-1.5 -end-2.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-guardrail-cooling px-1 text-[10px] font-bold text-white shadow-xs">
                     {tab.badge}
                   </span>
                 )}

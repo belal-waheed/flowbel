@@ -9,6 +9,7 @@ import {
 } from '../../db/repositories/settingsRepository';
 import { bulkAddFixedObligations } from '../../db/repositories/fixedObligationRepository';
 import { createInitialCycle } from '../../db/repositories/cycleRepository';
+import { getLocalDateString } from '../../utils/dateHelpers';
 import { hapticsService } from '../../services/native/hapticsService';
 import type { FixedObligation, PersonaGoal } from '../../types/finance';
 import {
@@ -53,9 +54,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ onComplete }
 
   // Step 2: Allowance & Payday & Envelope count
   const [allowanceInput, setAllowanceInput] = useState<string>('');
-  const [paydayDate, setPaydayDate] = useState<string>(
-    new Date().toISOString().split('T')[0]
-  );
+  const [paydayDate, setPaydayDate] = useState<string>(() => getLocalDateString());
   const [envelopeCount, setEnvelopeCount] = useState<4 | 5>(4);
   const [allowanceError, setAllowanceError] = useState<string | null>(null);
 
@@ -72,10 +71,18 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ onComplete }
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const toggleCategory = (id: string) => {
-    hapticsService.impactLight();
-    setSelectedCategoryIds((prev) =>
-      prev.includes(id) ? prev.filter((catId) => catId !== id) : [...prev, id]
-    );
+    setSelectedCategoryIds((prev) => {
+      if (prev.includes(id)) {
+        if (prev.length <= 1) {
+          hapticsService.notificationWarning();
+          return prev;
+        }
+        hapticsService.impactLight();
+        return prev.filter((catId) => catId !== id);
+      }
+      hapticsService.impactLight();
+      return [...prev, id];
+    });
   };
 
   const goalIcons: Record<PersonaGoal, React.ReactNode> = {
@@ -539,6 +546,17 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({ onComplete }
                   {lang === 'ar' ? selectedCurrency.symbolAr : selectedCurrency.symbolEn}
                 </span>
               </div>
+
+              {totalFixedCosts > (parseFloat(allowanceInput) || 0) && (
+                <div className="flex items-center gap-2 rounded-xl border border-guardrail-danger/30 bg-guardrail-danger-bg p-3 text-xs text-guardrail-danger">
+                  <AlertCircle className="h-4 w-4 shrink-0" />
+                  <span>
+                    {lang === 'ar'
+                      ? 'تنبيه: إجمالي الالتزامات الثابتة يتجاوز المصروف الكلي المدخل.'
+                      : 'Notice: Fixed commitments exceed your entered monthly allowance.'}
+                  </span>
+                </div>
+              )}
             </div>
           )}
 

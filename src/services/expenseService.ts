@@ -21,6 +21,7 @@ import {
   updateCycle
 } from '../db/repositories/cycleRepository';
 import { db } from '../db/schema';
+import { getUserSettings } from '../db/repositories/settingsRepository';
 import { notificationService } from './native/notificationService';
 import { computeEnvelopeLedgers } from './cycleService';
 
@@ -116,10 +117,12 @@ export async function createExpense(params: {
   }
 
   if (state === 'cooling_off' && unlocksAt) {
+    const userSettings = await getUserSettings();
+    const currency = userSettings.currencyCode || 'EGP';
     await notificationService.scheduleCoolingUnlockNotification(
       record.id,
       'Cooling-Off Period Complete',
-      `You can now review your planned expense of ${record.amount} EGP.`,
+      `You can now review your planned expense of ${record.amount} ${currency}.`,
       unlocksAt
     );
   }
@@ -147,10 +150,13 @@ export async function submitExpenseReflection(
     unlocksAt
   });
 
+  const userSettings = await getUserSettings();
+  const currency = userSettings.currencyCode || 'EGP';
+
   await notificationService.scheduleCoolingUnlockNotification(
     expenseId,
     'Cooling-Off Period Complete',
-    `You can now review your planned expense of ${record.amount} EGP.`,
+    `You can now review your planned expense of ${record.amount} ${currency}.`,
     unlocksAt
   );
 
@@ -327,14 +333,19 @@ export async function createBatchExpenses(
     }
   });
 
-  for (const rec of coolingRecords) {
-    if (rec.unlocksAt) {
-      await notificationService.scheduleCoolingUnlockNotification(
-        rec.id,
-        'Cooling-Off Period Complete',
-        `You can now review your planned expense of ${rec.amount} EGP.`,
-        rec.unlocksAt
-      );
+  if (coolingRecords.length > 0) {
+    const userSettings = await getUserSettings();
+    const currency = userSettings.currencyCode || 'EGP';
+
+    for (const rec of coolingRecords) {
+      if (rec.unlocksAt) {
+        await notificationService.scheduleCoolingUnlockNotification(
+          rec.id,
+          'Cooling-Off Period Complete',
+          `You can now review your planned expense of ${rec.amount} ${currency}.`,
+          rec.unlocksAt
+        );
+      }
     }
   }
 

@@ -31,10 +31,14 @@ export const LogExpenseModal: React.FC<LogExpenseModalProps> = ({
 
   const [title, setTitle] = useState('');
   const [amountStr, setAmountStr] = useState('');
-  const [category, setCategory] = useState<string>('groceries');
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [envelopeWeek, setEnvelopeWeek] = useState<number>(activeWeek);
   const [showReflection, setShowReflection] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  const category = (selectedCategory && categories.some((c) => c.id === selectedCategory))
+    ? selectedCategory
+    : (categories[0]?.id || 'groceries');
 
   if (!isOpen || !cycle) return null;
 
@@ -110,7 +114,7 @@ export const LogExpenseModal: React.FC<LogExpenseModalProps> = ({
   const resetForm = () => {
     setTitle('');
     setAmountStr('');
-    setCategory('groceries');
+    setSelectedCategory('');
     setErrorMsg(null);
   };
 
@@ -175,7 +179,7 @@ export const LogExpenseModal: React.FC<LogExpenseModalProps> = ({
                   placeholder="0.00"
                   className="w-full rounded-xl border border-surface-border-strong bg-surface-card px-3 py-2 text-sm font-bold text-text-primary placeholder:text-text-muted focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none"
                 />
-                <span className="absolute inset-y-0 right-3 flex items-center text-xs font-semibold text-text-muted pointer-events-none">
+                <span className="absolute inset-y-0 end-3 flex items-center text-xs font-semibold text-text-muted pointer-events-none">
                   {lang === 'ar' ? settings.currencySymbolAr : settings.currencySymbolEn}
                 </span>
               </div>
@@ -188,7 +192,7 @@ export const LogExpenseModal: React.FC<LogExpenseModalProps> = ({
               </label>
               <select
                 value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                onChange={(e) => setSelectedCategory(e.target.value)}
                 className="w-full rounded-xl border border-surface-border-strong bg-surface-card px-3 py-2 text-xs text-text-primary focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none"
               >
                 {categories.map((cat) => (

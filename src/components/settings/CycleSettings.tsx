@@ -4,6 +4,7 @@ import { useFixedObligations } from '../../db/repositories/fixedObligationReposi
 import { useUserSettings, updateUserSettings } from '../../db/repositories/settingsRepository';
 import type { BudgetCycle } from '../../types/finance';
 import { updateActiveCycleSettings, startNewBudgetCycle, calculateEnvelopes } from '../../services/cycleService';
+import { getLocalDateString } from '../../utils/dateHelpers';
 import {
   Settings,
   Calendar,
@@ -38,10 +39,10 @@ export const CycleSettings: React.FC<CycleSettingsProps> = ({ cycle }) => {
   const obligations = useFixedObligations();
 
   const [allowanceStr, setAllowanceStr] = useState(() =>
-    cycle ? cycle.totalAllowance.toString() : '6800'
+    cycle ? cycle.totalAllowance.toString() : ''
   );
   const [paydayDate, setPaydayDate] = useState(() =>
-    cycle ? new Date(cycle.startDate).toISOString().split('T')[0] : ''
+    cycle ? getLocalDateString(new Date(cycle.startDate)) : getLocalDateString()
   );
   const [envelopeCount, setEnvelopeCount] = useState<4 | 5>(() => settings.envelopeCount || 4);
   const [coolingThresholdStr, setCoolingThresholdStr] = useState(() => settings.coolingThreshold.toString());
@@ -233,7 +234,7 @@ export const CycleSettings: React.FC<CycleSettingsProps> = ({ cycle }) => {
                 onChange={(e) => setAllowanceStr(e.target.value)}
                 className="w-full rounded-xl border border-surface-border-strong bg-surface-card px-3 py-2 text-sm font-bold text-text-primary focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none"
               />
-              <span className="absolute inset-y-0 right-3 flex items-center text-xs font-semibold text-text-muted pointer-events-none">
+              <span className="absolute inset-y-0 end-3 flex items-center text-xs font-semibold text-text-muted pointer-events-none">
                 {activeCurrencySymbol}
               </span>
             </div>
@@ -251,7 +252,7 @@ export const CycleSettings: React.FC<CycleSettingsProps> = ({ cycle }) => {
                 onChange={(e) => setPaydayDate(e.target.value)}
                 className="w-full rounded-xl border border-surface-border-strong bg-surface-card px-3 py-2 text-xs text-text-primary focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none"
               />
-              <Calendar className="absolute inset-y-0 right-3 my-auto h-4 w-4 text-text-muted pointer-events-none" />
+              <Calendar className="absolute inset-y-0 end-3 my-auto h-4 w-4 text-text-muted pointer-events-none" />
             </div>
           </div>
         </div>
@@ -272,7 +273,7 @@ export const CycleSettings: React.FC<CycleSettingsProps> = ({ cycle }) => {
                 onChange={(e) => setCoolingEnabled(e.target.checked)}
                 className="sr-only peer"
               />
-              <div className="w-9 h-5 bg-surface-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-surface-border after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand"></div>
+              <div className="w-9 h-5 bg-surface-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-surface-border after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand"></div>
             </label>
           </div>
 

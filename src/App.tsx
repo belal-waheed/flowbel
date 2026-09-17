@@ -19,7 +19,7 @@ import { SpotlightTour } from './components/onboarding/SpotlightTour';
 import { initializeDatabase } from './db/schema';
 import { useActiveCycle } from './db/repositories/cycleRepository';
 import { useUserSettings } from './db/repositories/settingsRepository';
-import { initNativeServices } from './services/native/nativeInitService';
+import { initNativeServices, setNativeBackButtonHandler } from './services/native/nativeInitService';
 import { notificationService } from './services/native/notificationService';
 import type { PlaybookScenario } from './types/playbook';
 import { FINANCIAL_PRINCIPLES } from './data/principles';
@@ -37,8 +37,12 @@ const FlowbelApp: React.FC = () => {
   // Initialize and seed database on mount and configure native mobile capabilities
   useEffect(() => {
     initializeDatabase();
+    initNativeServices();
+  }, []);
 
-    initNativeServices(() => {
+  // Update hardware back button handler whenever modal states change
+  useEffect(() => {
+    setNativeBackButtonHandler(() => {
       if (isDailyLogModalOpen) {
         setIsDailyLogModalOpen(false);
         return true;
@@ -47,10 +51,16 @@ const FlowbelApp: React.FC = () => {
         setIsLogModalOpen(false);
         return true;
       }
+      if (selectedScenario) {
+        setSelectedScenario(null);
+        return true;
+      }
       return false;
     });
+  }, [isDailyLogModalOpen, isLogModalOpen, selectedScenario]);
 
-    // Schedule 8:00 PM local daily check-in reminder
+  // Schedule 8:00 PM local daily check-in reminder
+  useEffect(() => {
     notificationService.scheduleDailyReminder(
       20,
       0,
@@ -59,7 +69,7 @@ const FlowbelApp: React.FC = () => {
         ? 'سجل مصروفات اليوم لحماية معدل الحرق اليومي الآمن.'
         : "Take 30 seconds to log today's spending and protect your safe daily burn."
     );
-  }, [isDailyLogModalOpen, isLogModalOpen, lang]);
+  }, [lang]);
 
   // Reactive subscription to active budget cycle
   const activeCycle = useActiveCycle();
