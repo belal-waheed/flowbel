@@ -1,0 +1,274 @@
+# Flowbel - Comprehensive Technical & Domain Specification
+
+> Canonical URI: https://flowbel.vercel.app/llms-full.txt
+> Document Version: 1.1.0
+> Target Application: Flowbel (Personal Finance & Egyptian Street Smarts PWA)
+
+---
+
+## 1. Domain Data Models (TypeScript Schemas)
+
+### Budget Cycle Schema
+```typescript
+export type CycleStatus = 'active' | 'completed';
+
+export interface BudgetCycle {
+  id: string;
+  startDate: string; // ISO string (Payday anchor)
+  endDate: string;   // ISO string (28 days later)
+  totalAllowance: number; // Total monthly allowance in EGP
+  totalFixedCosts: number; // Sum of all fixed obligations
+  variablePool: number;   // totalAllowance - totalFixedCosts
+  envelopeBudget: number; // Weekly envelope allocation
+  envelopes: WeeklyEnvelope[];
+  status: CycleStatus;
+  createdAt: string;
+  updatedAt: string;
+}
+```
+
+### Fixed Obligation Schema
+```typescript
+export type ObligationCategory =
+  | 'housing'
+  | 'connectivity'
+  | 'travel'
+  | 'transit'
+  | 'fitness'
+  | 'personal'
+  | 'academic';
+
+export interface FixedObligation {
+  id: string;
+  category: ObligationCategory;
+  titleEn: string;
+  titleAr: string;
+  amount: number;
+  dueDay?: number;
+  isPaid?: boolean;
+}
+```
+
+### Weekly Envelope Schema
+```typescript
+export type EnvelopeStatus = 'active' | 'upcoming' | 'completed' | 'overspent';
+
+export interface WeeklyEnvelope {
+  weekNumber: number; // 1, 2, 3, 4
+  labelEn: string;
+  labelAr: string;
+  startDate: string; // ISO string
+  endDate: string;   // ISO string
+  allocatedAmount: number; // variablePool / 4
+  spentAmount: number;
+  remainingAmount: number;
+  status: EnvelopeStatus;
+}
+```
+
+### Expense & Cooling Reflection Schema
+```typescript
+export type ExpenseCategory =
+  | 'groceries'
+  | 'transit'
+  | 'study'
+  | 'dining'
+  | 'tech'
+  | 'leisure'
+  | 'emergency'
+  | 'discretionary'
+  | 'other';
+
+export type ExpenseState =
+  | 'draft'
+  | 'reflection_pending'
+  | 'cooling_off'
+  | 'committed'
+  | 'aborted';
+
+export interface ReflectionAnswers {
+  needVsWant: boolean; // True if confirmed to be an essential need rather than impulse want
+  dormantCheck: boolean; // True if verified it will still be actively utilized in 30 days
+  budgetImpact: boolean; // True if verified weekly envelope can comfortably absorb it
+  alternativeExplored: boolean; // True if cheaper/free alternative was researched first
+  notes?: string;
+}
+
+export interface ExpenseRecord {
+  id: string;
+  cycleId: string;
+  envelopeWeek: number; // 1 to 4
+  title: string;
+  amount: number;
+  category: ExpenseCategory;
+  state: ExpenseState;
+  isDiscretionary: boolean;
+  requiresCooling: boolean;
+  reflectionAnswers?: ReflectionAnswers;
+  coolingDurationHours: number; // default 24
+  unlocksAt?: number; // Immutable UTC millisecond timestamp
+  abortedReason?: string;
+  createdAt: string; // ISO string
+  committedAt?: string; // ISO string
+  abortedAt?: string; // ISO string
+}
+```
+
+### Playbook Domain Schema
+```typescript
+export interface PlaybookDialogue {
+  triggerEn: string;
+  triggerAr: string;
+  scriptEn: string;
+  scriptAr: string;
+}
+
+export interface PlaybookStep {
+  id: string;
+  titleEn: string;
+  titleAr: string;
+  descriptionEn: string;
+  descriptionAr: string;
+  warningEn?: string;
+  warningAr?: string;
+  actionableCheckEn: string;
+  actionableCheckAr: string;
+}
+
+export interface PlaybookPrinciple {
+  id: string;
+  ruleEn: string;
+  ruleAr: string;
+  explanationEn: string;
+  explanationAr: string;
+}
+
+export interface PlaybookScenario {
+  id: string;
+  category: 'lending' | 'tech' | 'housing' | 'negotiation' | 'emergency';
+  titleEn: string;
+  titleAr: string;
+  subtitleEn: string;
+  subtitleAr: string;
+  contextEn: string;
+  contextAr: string;
+  iconName: string;
+  goldenRuleEn: string;
+  goldenRuleAr: string;
+  principles: PlaybookPrinciple[];
+  steps: PlaybookStep[];
+  dialogues: PlaybookDialogue[];
+}
+```
+
+---
+
+## 2. Finite State Machine (FSM) Expense Lifecycle
+
+```
+        [User Initiates Expense]
+                   |
+     Amount > 150 EGP & Discretionary?
+          /                   \
+        No                    Yes
+        |                      |
+        v                      v
+[state: 'committed']   [state: 'reflection_pending']
+        |                      |
+        |              [Honest Reflection Checklist]
+        |                      |
+        |              [state: 'cooling_off']
+        |              (Timer: 24 Hours Lock)
+        |                      |
+        |             ----------------------
+        |             |                    |
+        |      24 Hours Expired      User Aborts
+        |             |                    |
+        |      User Chooses:               v
+        |      - Commit:          [state: 'aborted']
+        |        -> [committed]   (Funds Retained in Budget)
+        |      - Abort:
+        |        -> [aborted]
+        |
+        v
+[Deducted from Active Weekly Envelope]
+```
+
+### Transition Table:
+1. `draft -> committed`: Essential living expenses and sub-threshold purchases (<= 150 EGP) commit immediately and deduct from the active weekly envelope.
+2. `draft -> reflection_pending`: Discretionary expenses exceeding 150 EGP require reflection review.
+3. `reflection_pending -> cooling_off`: Once all 4 reality-check questions are answered honestly, the 24-hour cooling lock is activated with an immutable `unlocksAt` timestamp.
+4. `cooling_off -> committed`: After the 24-hour delay elapses, the user confirms the purchase. Funds are deducted from the active envelope.
+5. `cooling_off -> aborted`: User decides against the purchase. Capital is preserved and recorded as a financial discipline victory.
+
+---
+
+## 3. Mathematical Allocation Model
+
+1. Variable Pool Calculation:
+   `variablePool = Math.max(0, totalAllowance - totalFixedCosts)`
+
+2. Weekly Envelope Allocation:
+   `weeklyAllocation = Number((variablePool / 4).toFixed(2))`
+
+3. Dynamic Safe Daily Burn Rate:
+   `committedExpenses = Sum(activeEnvelope.spentAmount across weeks)`
+   `remainingLiquidity = Math.max(0, totalAllowance - totalFixedCosts - committedExpenses)`
+   `daysRemaining = Math.max(1, Ceil((cycleEndDate - currentDate) / 86400000))`
+   `safeDailyBurn = Number((remainingLiquidity / daysRemaining).toFixed(1))`
+
+4. Overdraft Guardrail:
+   When `remainingAmount < 0` for an envelope, the envelope status transitions to `'overspent'`.
+
+---
+
+## 4. Egyptian Life Playbooks Protocol Directory
+
+### Scenario 1: Lending Money & Boundaries (إقراض المال والحدود الشخصية)
+- Category: Lending
+- Golden Law: Never lend an amount you cannot afford to write off completely as an unrecoverable gift.
+- Verification Protocol:
+  - Verify that the requested amount does not exceed 15% of remaining variable funds.
+  - Never dip into the 3,150 EGP fixed obligations reserve.
+  - Require timestamped written confirmation of repayment date over WhatsApp/Instapay before transferring funds.
+
+### Scenario 2: Buying Used Electronics & Laptops (شراء الإلكترونيات واللابتوبات المستعملة)
+- Category: Tech & Hardware
+- Golden Law: Never hand over money without a complete 30-minute stress test running on a diagnostics suite.
+- Verification Protocol:
+  - Generate Windows `powercfg /batteryreport` and verify wear level is under 25%.
+  - Run CrystalDiskInfo from a bootable USB to confirm 100% SMART health and low power-on hours.
+  - Test display under pure black (IPS glow) and pure white (dead pixels) backgrounds.
+  - Run FurMark/Cinebench for 10 minutes to verify thermals remain below 88°C.
+
+### Scenario 3: Tenancy & Shared Student Housing (السكن والتعامل مع السماسرة والشركاء)
+- Category: Housing
+- Golden Law: Document every square centimeter with timestamped 4K video on day one before unpacking a single bag.
+- Verification Protocol:
+  - Photograph electricity, gas, and water meter baselines with timestamps and annex them to the contract.
+  - Test all water taps simultaneously for pressure and verify water heater operation.
+  - Establish a written monthly utility split agreement due on the 1st of each month.
+
+### Scenario 4: Calm Negotiation with Vendors (التفاوض الهادئ مع التجار والحرفيين)
+- Category: Negotiation
+- Golden Law: Never buy from the first vendor who quotes you. Always gather 3 independent quotes before committing.
+- Verification Protocol:
+  - Execute the 3-shop reconnaissance rule to establish real market price.
+  - Leverage upfront cash payment readiness to anchor 15-20% below highest quote.
+  - Execute the physical walk-away test politely if unreasonable prices persist.
+
+### Scenario 5: Emergency Protocol & Student Contingency Buffer (بروتوكول الطوارئ واحتياطي الأزمات)
+- Category: Emergency
+- Golden Law: Always keep an untouchable 300 EGP physical cash note hidden inside a private notebook, separate from your wallet.
+- Verification Protocol:
+  - Maintain an untouchable 300 EGP cash anchor for extreme night emergencies.
+  - Stock room first-aid pharmacy pouch (Paracetamol, Antinal, Rehydran, antiseptic, bandages).
+  - Encrypt and store offline digital scans of National ID, University ID, and medical insurance cards.
+
+---
+
+## 5. Security & Sovereignty Guarantees
+
+1. Zero Cloud Dependency: All records, cycles, expenses, and playbook states persist exclusively on-device via IndexedDB.
+2. Verified Offline JSON Backups: Full schema integrity verified with Zod runtime validation during import and export.
+3. Zero Telemetry: 100% tracker-free, zero analytics scripts, zero external cookies, zero third-party fonts.

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="terracotta-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8C431D" />
+      <stop offset="100%" stop-color="#723414" />
+    </linearGradient>
+    <linearGradient id="amber-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D97706" />
+      <stop offset="100%" stop-color="#B45309" />
+    </linearGradient>
+    <filter id="subtle-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#1C1917" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <!-- Surface Base with Hairline Border -->
+  <rect width="512" height="512" rx="112" fill="#F8F5EE" stroke="#E2DDD3" stroke-width="8" />
+
+  <!-- Inner Content Group with Subtle Elevation -->
+  <g filter="url(#subtle-shadow)">
+    <!-- Architectural Vertical Pillar (Discipline & Stability Backbone) -->
+    <rect x="238" y="104" width="36" height="304" rx="18" fill="url(#terracotta-grad)" />
+
+    <!-- Pillar Architectural Inset Fluting -->
+    <line x1="256" y1="126" x2="256" y2="386" stroke="#F8F5EE" stroke-opacity="0.3" stroke-width="4" stroke-linecap="round" />
+
+    <!-- Continuous Liquidity Flow Loop (Weaving Infinity Ribbon) -->
+    <!-- Left Loop (Behind Pillar on Left Return) -->
+    <path d="M 256 256 C 204 186 112 186 112 256 C 112 326 204 326 256 256" 
+          fill="none" 
+          stroke="url(#terracotta-grad)" 
+          stroke-width="32" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
+
+    <!-- Right Loop (Flowing Out & Returning) -->
+    <path d="M 256 256 C 308 186 400 186 400 256 C 400 326 308 326 256 256" 
+          fill="none" 
+          stroke="url(#terracotta-grad)" 
+          stroke-width="32" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
+
+    <!-- Fluid Direction Accent Dots -->
+    <circle cx="160" cy="221" r="5" fill="#F8F5EE" fill-opacity="0.8" />
+    <circle cx="352" cy="291" r="5" fill="#F8F5EE" fill-opacity="0.8" />
+
+    <!-- Pillar Center Overlap Cap to Reinforce Weaving Layer Depth -->
+    <rect x="242" y="234" width="28" height="44" rx="14" fill="#723414" />
+
+    <!-- Discipline Anchor Node (24-Hour Cooling Lock & Stoic Core) -->
+    <circle cx="256" cy="256" r="28" fill="url(#amber-grad)" stroke="#F8F5EE" stroke-width="5" />
+    <circle cx="256" cy="256" r="14" fill="#FEF9C3" />
+    <circle cx="256" cy="256" r="5" fill="#B45309" />
+  </g>
+</svg>

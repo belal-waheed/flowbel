@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 140" width="580" height="140">
+  <defs>
+    <linearGradient id="logo-terracotta" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8C431D" />
+      <stop offset="100%" stop-color="#723414" />
+    </linearGradient>
+    <linearGradient id="logo-amber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D97706" />
+      <stop offset="100%" stop-color="#B45309" />
+    </linearGradient>
+    <filter id="logo-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#1C1917" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <!-- Emblem Group (The Stable Flow Loop) -->
+  <g transform="translate(16, 10) scale(0.234375)" filter="url(#logo-shadow)">
+    <!-- Base background disc -->
+    <rect width="512" height="512" rx="112" fill="#F8F5EE" stroke="#E2DDD3" stroke-width="8" />
+
+    <!-- Vertical Pillar -->
+    <rect x="238" y="104" width="36" height="304" rx="18" fill="url(#logo-terracotta)" />
+    <line x1="256" y1="126" x2="256" y2="386" stroke="#F8F5EE" stroke-opacity="0.3" stroke-width="4" stroke-linecap="round" />
+
+    <!-- Flow Loop: Left -->
+    <path d="M 256 256 C 204 186 112 186 112 256 C 112 326 204 326 256 256" 
+          fill="none" 
+          stroke="url(#logo-terracotta)" 
+          stroke-width="32" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
+
+    <!-- Flow Loop: Right -->
+    <path d="M 256 256 C 308 186 400 186 400 256 C 400 326 308 326 256 256" 
+          fill="none" 
+          stroke="url(#logo-terracotta)" 
+          stroke-width="32" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
+
+    <!-- Fluid accents -->
+    <circle cx="160" cy="221" r="5" fill="#F8F5EE" fill-opacity="0.8" />
+    <circle cx="352" cy="291" r="5" fill="#F8F5EE" fill-opacity="0.8" />
+
+    <!-- Center Overlap -->
+    <rect x="242" y="234" width="28" height="44" rx="14" fill="#723414" />
+
+    <!-- Discipline Anchor Node -->
+    <circle cx="256" cy="256" r="28" fill="url(#logo-amber)" stroke="#F8F5EE" stroke-width="5" />
+    <circle cx="256" cy="256" r="14" fill="#FEF9C3" />
+    <circle cx="256" cy="256" r="5" fill="#B45309" />
+  </g>
+
+  <!-- Flowbel Brand Wordmark -->
+  <text x="156" y="66" 
+        font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" 
+        font-size="44" 
+        font-weight="800" 
+        letter-spacing="-0.03em" 
+        fill="#8C431D">Flowbel</text>
+
+  <!-- Sub-wordmark / Pillar Badge -->
+  <rect x="330" y="38" width="84" height="22" rx="6" fill="#F1ECE2" stroke="#E2DDD3" stroke-width="1" />
+  <text x="372" y="53" 
+        font-family="system-ui, -apple-system, sans-serif" 
+        font-size="11" 
+        font-weight="700" 
+        letter-spacing="0.04em" 
+        text-anchor="middle" 
+        fill="#B45309">EGYPT</text>
+
+  <!-- Primary Tagline (Arabic) -->
+  <text x="156" y="94" 
+        font-family="system-ui, -apple-system, 'Segoe UI', Arial, sans-serif" 
+        font-size="16" 
+        font-weight="600" 
+        fill="#1C1917" 
+        direction="rtl">دليلك العملي للمال وأصول التعامل في الشارع</text>
+
+  <!-- Secondary Descriptor (English) -->
+  <text x="156" y="116" 
+        font-family="system-ui, -apple-system, 'Segoe UI', Arial, sans-serif" 
+        font-size="13" 
+        font-weight="500" 
+        letter-spacing="0.01em" 
+        fill="#57534E">Your practical guide to money and real-world street smarts</text>
+</svg>
